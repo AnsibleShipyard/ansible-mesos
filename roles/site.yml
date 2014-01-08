@@ -1,0 +1,16 @@
+---
+- name: Create groups based on distribution
+  group_by: key={{ ansible_distribution }}
+
+- hosts: cluster_nodes
+  sudo: True
+  roles:
+  - common
+
+- hosts: Ubuntu
+  gather_facts: no
+  sudo: True
+  vars:
+    platform_url_name: "ubuntu"
+  roles:
+  - ubuntu

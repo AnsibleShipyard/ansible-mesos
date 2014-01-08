@@ -1,0 +1,51 @@
+---
+- hosts: all
+  sudo: True
+  tasks:
+    group_by: key={{ ansible_distribution }}
+  roles:
+    - common
+
+- hosts: Ubuntu
+  gather_facts: no
+  sudo: True
+  vars:
+    platform_url_name: "ubuntu"
+  roles:
+  - ubuntu
+
+# - hosts: all
+#   sudo: True
+#   vars:
+#     version: "0.14.2"
+#     file_name: "mesos_{{version}}_{{facter_architecture}}.deb"
+#     base_url: "http://downloads.mesosphere.io/master"
+#     download_url: "{{base_url}}/{{ansible_distribution}}/{{ansible_distribution_version}}/{{file_name}}"
+    
+
+#   tasks:
+#     - apt: pkg=wget state=present
+#     - apt: pkg=curl state=present
+#     - apt: pkg=g++ state=present
+#     - apt: pkg=gcc state=present
+#     - apt: pkg=zookeeper-bin state=present
+#     - apt: pkg=zookeeperd state=present
+#     - apt: pkg=python-setuptools state=present
+#     - apt: pkg=python-dev state=present
+#     - apt: pkg=libcurl4-openssl-dev state=present
+#     - apt: pkg=libsasl2-2 state=present
+#     - apt: pkg=libsasl2-dev state=present
+#     - apt: pkg=libcurl3 state=present
+#     - apt: pkg=openjdk-6-jdk state=present
+
+#     - name: download mesos v{{version}}
+#       get_url: url={{download_url}} dest=/tmp/{{file_name}}
+
+
+
+    # - name: unpack nodejs {{node_version}}
+    #   command: tar -xvzf {{file_name}} chdir=/tmp
+
+    # - name: compile and install nodejs {{node_version}}
+    #   shell: ./configure && make && make install chdir=/tmp/{{node_name}}
+    #   sudo: true
