@@ -40,12 +40,3 @@
 
 #     - name: download mesos v{{version}}
 #       get_url: url={{download_url}} dest=/tmp/{{file_name}}
-
-
-
-    # - name: unpack nodejs {{node_version}}
-    #   command: tar -xvzf {{file_name}} chdir=/tmp
-
-    # - name: compile and install nodejs {{node_version}}
-    #   shell: ./configure && make && make install chdir=/tmp/{{node_name}}
-    #   sudo: true
