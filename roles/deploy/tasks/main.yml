@@ -1,0 +1,4 @@
+  # - name: download mesos v{{version}}
+  #   get_url: url={{download_url}} dest=/tmp/{{file_name}}
+  - debug: msg="version to get is {{version}}"
+  - debug: msg="I found {{platform_url_name}}"
