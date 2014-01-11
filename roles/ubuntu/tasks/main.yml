@@ -1,0 +1,3 @@
+---
+  - name: download mesos v{{version}}
+    get_url: url={{download_url}} dest={{dest_file}}

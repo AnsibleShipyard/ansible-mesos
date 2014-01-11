@@ -11,10 +11,12 @@
   sudo: True
   vars:
     platform_url_name: "ubuntu"
-    version: "0.14.2"
-    file_name: "mesos_{{version}}_{{facter_architecture}}.deb"
+    package_type: "deb"
+    version: "0.15.0"
+    file_name: "mesos_{{version}}_{{facter_architecture}}.{{package_type}}"
     base_url: "http://downloads.mesosphere.io/master"
-    download_url: "{{base_url}}/{{ansible_distribution}}/{{ansible_distribution_version}}/{{file_name}}"
+    download_url: "{{base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{file_name}}"
+    dest_file: "/tmp/{{file_name}}"
   roles:
     - ubuntu
     - deploy
