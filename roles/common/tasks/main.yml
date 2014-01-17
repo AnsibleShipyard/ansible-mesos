@@ -1,17 +1,17 @@
 ---
-  - name: Install os packages
-    apt: pkg={{item}} state=present
-    with_items: 
-      - wget
-      - curl 
-      - g++ 
-      - gcc 
-      - zookeeper-bin 
-      - zookeeperd 
-      - python-setuptools 
-      - python-dev 
-      - libcurl4-openssl-dev 
-      - libsasl2-2 
-      - libsasl2-dev 
-      - libcurl3 
-      - openjdk-6-jdk 
+- name: Install os packages
+  apt: pkg={{item}} state=present
+  with_items: 
+    - wget
+    - curl 
+    - g++ 
+    - gcc 
+    - zookeeper-bin 
+    - zookeeperd 
+    - python-setuptools 
+    - python-dev 
+    - libcurl4-openssl-dev 
+    - libsasl2-2 
+    - libsasl2-dev 
+    - libcurl3 
+    - openjdk-6-jdk 

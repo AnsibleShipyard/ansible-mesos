@@ -4,4 +4,3 @@
 
 - name: Install Mesos Debian Package
   shell: dpkg -i {{dest_file}}
-  
