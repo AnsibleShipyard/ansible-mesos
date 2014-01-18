@@ -1,14 +1,11 @@
 ---
-# Required params
-#   - download_url
-#
-# Supply your own and your off
-#
-
 - hosts: all
   sudo: True
+  vars_files:
+    - vars/default.yml
   tasks:
-    group_by: key={{ ansible_distribution }}
+    - include_vars: vars/default.yml
+    - action: group_by key={{ ansible_distribution }}
   roles:
     - common
 
@@ -16,32 +13,8 @@
   gather_facts: no
   sudo: True
   vars:
-    install_mode: "local" # {master|slave|local}
-
-    # used to compose download_url
     platform_url_name: "ubuntu"
     package_type: "deb"
-    version: "0.15.0"
-    file_name: "mesos_{{version}}_{{facter_architecture}}.{{package_type}}"
-    dest_file: "/tmp/{{file_name}}"
-    base_url: "http://downloads.mesosphere.io/master"
-    download_url: "{{base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{file_name}}"
-
-    # exec info
-    bin_name: mesos
-    local_bin: "{{bin_name}}-local"
-    master_bin: "{{bin_name}}-master"
-    slave_bin: "{{bin_name}}-slave"
-
-    # conf file settings
-    local_addr: "{{ansible_fqdn}}" # {ansible_all_ipv4_addresses[1], facter_ipaddress_eth1, etc...}
-    local_port: "2181"
-    log_location: "/var/log/mesos"
-    ulimit: "-n 8192"
-    zookeepers: "zk://{{local_addr}}:{{local_port}}/mesos" # used by masters to find zookeeper
-    masters: "zk://{{local_addr}}:{{local_port}}/mesos" # used by slaves
-    options: "--log_dir=$LOGS"
-
   roles:
-    - ubuntu
-    - deploy
+    # - ubuntu
+    # - deploy
