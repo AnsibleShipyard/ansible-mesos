@@ -1,5 +1,5 @@
 ---
-version: "0.1.0"
+version: "0.1.1"
 install_mode: "local" # {master|slave|local}
 # used to compose download_url
 mesos_version: "0.15.0"
