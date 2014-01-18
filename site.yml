@@ -16,5 +16,5 @@
     platform_url_name: "ubuntu"
     package_type: "deb"
   roles:
-    # - ubuntu
-    # - deploy
+    - ubuntu
+    - deploy
