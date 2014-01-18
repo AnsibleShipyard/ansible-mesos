@@ -1,8 +1,9 @@
 ---
+version: "0.1.0"
 install_mode: "local" # {master|slave|local}
 # used to compose download_url
-version: "0.15.0"
-file_name: "mesos_{{version}}_{{facter_architecture}}.{{package_type}}"
+mesos_version: "0.15.0"
+file_name: "mesos_{{mesos_version}}_{{facter_architecture}}.{{package_type}}"
 dest_file: "/tmp/{{file_name}}"
 base_url: "http://downloads.mesosphere.io/master"
 download_url: "{{base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{file_name}}"
@@ -25,3 +26,8 @@ options: "--log_dir=$LOGS"
 # Platform defaults to ubuntu
 platform_url_name: "ubuntu"
 package_type: "deb"
+
+# OSS ftw :-)
+java_version: "6"
+libjvm_path: "/usr/lib/jvm/java-{{java_version}}-*/jre/lib/*/server/libjvm.so"
+libjvm_symlink_path: "/usr/lib/libjvm.so"

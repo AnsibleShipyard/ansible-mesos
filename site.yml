@@ -1,8 +1,8 @@
 ---
 - hosts: all
   sudo: True
-  # vars_files: # does not work
-    # - vars/default.yml
+  vars_files:
+    - vars/default.yml
   tasks:
     - include_vars: vars/default.yml
     - action: group_by key={{ ansible_distribution }}
@@ -16,5 +16,5 @@
     platform_url_name: "ubuntu"
     package_type: "deb"
   roles:
-    - ubuntu
-    - deploy
+    # - ubuntu
+    # - deploy
