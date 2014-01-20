@@ -3,7 +3,8 @@ version: "0.1.1"
 install_mode: "local" # {master|slave|local}
 # used to compose download_url
 mesos_version: "0.15.0"
-file_name: "mesos_{{mesos_version}}_{{facter_architecture}}.{{package_type}}"
+mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
+file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
 dest_file: "/tmp/{{file_name}}"
 base_url: "http://downloads.mesosphere.io/master"
 download_url: "{{base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{file_name}}"
