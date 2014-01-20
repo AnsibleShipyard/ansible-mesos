@@ -1,10 +1,4 @@
 ---
-# notify: 
-#     - Mesos default config file
-#     - Mesos master script
-#     - Mesos slave script
-#
-
 - name: Mesos default config file
   template: src=templates/mesos.j2 dest=/etc/default/mesos
 

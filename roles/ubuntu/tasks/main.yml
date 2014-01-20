@@ -1,6 +1,20 @@
 ---
-- name: download mesos v{{mesos_version}}
-  get_url: url={{download_url}} dest={{dest_file}}
+
+- name: Install os packages
+  apt: pkg={{item}} state=present
+  with_items:
+    - wget
+    - curl
+    - g++
+    - gcc
+    - zookeeper-bin
+    - zookeeperd
+    - python-setuptools
+    - python-dev
+    - libcurl4-openssl-dev
+    - libsasl2-2
+    - libsasl2-dev
+    - libcurl3
 
 - name: Install Mesos Debian Package
   shell: dpkg -i {{dest_file}}
