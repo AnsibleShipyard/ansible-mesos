@@ -1,4 +1,4 @@
 ---
 
-- name: download mesos v{{mesos_version}}
+- name: Download mesos v{{mesos_version}}
   get_url: url={{download_url}} dest={{dest_file}}
