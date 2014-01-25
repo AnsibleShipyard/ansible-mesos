@@ -1,0 +1,36 @@
+---
+mesos_playbook_version: "0.1.4"
+
+platform_url_name: "ubuntu"
+package_type: "deb"
+
+mesos_install_mode: "local" # {master|slave|local}
+# used to compose mesos_download_url
+mesos_version: "0.15.0"
+mesos_base_url: "http://downloads.mesosphere.io/master"
+mesos_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_file_name}}"
+mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
+mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
+mesos_dest_file: "/tmp/{{mesos_file_name}}"
+
+# exec info
+mesos_bin_name: mesos
+mesos_local_bin: "{{mesos_bin_name}}-local"
+mesos_master_bin: "{{mesos_bin_name}}-master"
+mesos_slave_bin: "{{mesos_bin_name}}-slave"
+
+# conf file settings
+mesos_local_addr: "{{ansible_fqdn}}" # {ansible_all_ipv4_addresses[1], facter_ipaddress_eth1, etc...}
+mesos_local_port: "2181"
+mesos_log_location: "/var/log/mesos"
+mesos_ulimit: "-n 8192"
+mesos_zookeepers: "zk://{{mesos_local_addr}}:{{mesos_local_port}}/mesos" # used by masters to find zookeeper
+mesos_masters: "zk://{{mesos_local_addr}}:{{mesos_local_port}}/mesos" # used by slaves
+mesos_options: "--log_dir=$LOGS"
+
+mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
+mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
+mesos_dest_file: "/tmp/{{mesos_file_name}}"
+
+platform_url_name: "ubuntu"
+package_type: "deb"

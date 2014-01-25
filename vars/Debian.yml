@@ -1,0 +1,9 @@
+---
+# - include_vars: default.yml
+
+platform_url_name: "ubuntu"
+package_type: "deb"
+
+mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
+mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
+mesos_dest_file: "/tmp/{{mesos_file_name}}"

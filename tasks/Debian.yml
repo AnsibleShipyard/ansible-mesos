@@ -1,5 +1,4 @@
 ---
-
 - name: Install os packages
   apt: pkg={{item}} state=present
   with_items:
@@ -17,4 +16,4 @@
     - libcurl3
 
 - name: Install Mesos Debian Package
-  shell: dpkg -i {{dest_file}}
+  shell: dpkg -i {{mesos_dest_file}}

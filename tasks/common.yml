@@ -1,0 +1,6 @@
+---
+- name: Download mesos v{{mesos_version}}
+  get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
+
+- name: Mesos default config file
+  template: src=mesos.j2 dest=/etc/default/mesos
