@@ -1,14 +1,44 @@
 ---
+# - stat: path=/etc/init/mesos-master.conf
+#   register: mesos_master_exists
+#   notify:
+#     - Disable mesos-master
+
+# - stat: path=/etc/init/mesos-slave.conf
+#   register: mesos_slave_exists
+#   notify:
+#     - Disable mesos-slave
+
+# == Disable services
+# - name: Disable mesos-master
+#   service: name=mesos-master state=stopped enabled=no sleep=10
+#   when: mesos_master_exists.stat.exists == True
+
+# - name: Disable mesos-slave
+#   service: name=mesos-slave state=stopped enabled=no sleep=10
+#   when: mesos_slave_exists.stat.exists == True
+
+# - name: Pause to allow services to catch up
+#   pause: seconds=10
+
+# == Delete to force template creation, actually helps propagate changes
+# - name: Delete master script
+#   file: path=/etc/init/mesos-master.conf state=absent
+
+# - name: Delete slave script
+#   file: path=/etc/init/mesos-slave.conf state=absent
+
+# == Re-enable services as necessary
 - name: Mesos master script
   template: src=mesos-master.j2 dest=/etc/init/mesos-master.conf
-  when: mesos_install_mode == 'master'
-  when: mesos_install_mode == 'local'
+  when: mesos_install_mode == "master"
+  # when: mesos_install_mode == "local"
   notify:
-    - restart mesos-master
+    - Restart mesos-master
 
 - name: Mesos slave script
   template: src=mesos-slave.j2 dest=/etc/init/mesos-slave.conf
-  when: mesos_install_mode == 'slave'
-  when: mesos_install_mode == 'local'
+  when: mesos_install_mode == "slave"
+  # when: mesos_install_mode == "local"
   notify:
-    - restart mesos-slave
+    - Restart mesos-slave

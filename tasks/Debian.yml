@@ -17,3 +17,6 @@
 
 - name: Install Mesos Debian Package
   shell: dpkg -i {{mesos_dest_file}}
+
+- name: Mesos default config file
+  template: src=mesos.j2 dest=/etc/default/mesos
