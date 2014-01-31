@@ -32,13 +32,13 @@
 - name: Mesos master script
   template: src=mesos-master.j2 dest=/etc/init/mesos-master.conf
   when: mesos_install_mode == "master"
-  # when: mesos_install_mode == "local"
+  when: mesos_install_mode == "local"
   notify:
     - Restart mesos-master
 
 - name: Mesos slave script
   template: src=mesos-slave.j2 dest=/etc/init/mesos-slave.conf
   when: mesos_install_mode == "slave"
-  # when: mesos_install_mode == "local"
+  when: mesos_install_mode == "local"
   notify:
     - Restart mesos-slave
