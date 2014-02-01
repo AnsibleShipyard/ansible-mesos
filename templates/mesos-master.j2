@@ -16,5 +16,6 @@ script
     ${PORT:+--port=$PORT} \
     ${CLUSTER:+--cluster=$CLUSTER} \
     ${WHITELIST:+--whitelist=$WHITELIST} \
-    $OPTS
+    $OPTS \
+    >> "$LOGS"/master.log 2>&1
 end script
