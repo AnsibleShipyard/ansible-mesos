@@ -21,24 +21,24 @@
 # - name: Pause to allow services to catch up
 #   pause: seconds=10
 
-# == Delete to force template creation, actually helps propagate changes
-# - name: Delete master script
-#   file: path=/etc/init/mesos-master.conf state=absent
+# == Delete to force template creation
+- name: Delete master script
+  file: path=/etc/init/mesos-master.conf state=absent
+  when: mesos_install_mode == "master"
 
-# - name: Delete slave script
-#   file: path=/etc/init/mesos-slave.conf state=absent
+- name: Delete slave script
+  file: path=/etc/init/mesos-slave.conf state=absent
+  when: mesos_install_mode == "slave"
 
 # == Re-enable services as necessary
 - name: Mesos master script
   template: src=mesos-master.j2 dest=/etc/init/mesos-master.conf
   when: mesos_install_mode == "master"
-  when: mesos_install_mode == "local"
   notify:
     - Restart mesos-master
 
 - name: Mesos slave script
   template: src=mesos-slave.j2 dest=/etc/init/mesos-slave.conf
   when: mesos_install_mode == "slave"
-  when: mesos_install_mode == "local"
   notify:
     - Restart mesos-slave
