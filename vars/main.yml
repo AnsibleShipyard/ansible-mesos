@@ -7,11 +7,14 @@ package_type: "deb"
 mesos_install_mode: "master" # {master|slave}
 # used to compose mesos_download_url
 mesos_version: "0.15.0"
-mesos_base_url: "http://downloads.mesosphere.io/master"
-mesos_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_file_name}}"
 mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
 mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
 mesos_dest_file: "/tmp/{{mesos_file_name}}"
+mesos_python_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.egg"
+mesos_python_dest_file: "/tmp/{{mesos_python_file_name}}"
+mesos_base_url: "http://downloads.mesosphere.io/master"
+mesos_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_file_name}}"
+mesos_python_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_python_file_name}}"
 
 # exec info
 mesos_bin_name: mesos

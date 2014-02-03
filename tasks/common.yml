@@ -3,3 +3,9 @@
 
 - name: Download mesos v{{mesos_version}}
   get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
+
+- name: Download mesos v{{mesos_version}} python bindings (egg file)
+  get_url: url={{mesos_python_download_url}} dest={{mesos_python_dest_file}}
+
+- name: Install Mesos python bindings
+  shell: easy_install {{mesos_python_dest_file}}
