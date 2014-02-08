@@ -1,4 +1,7 @@
 ---
+- name: Install Mesos python bindings
+  shell: easy_install {{mesos_python_dest_file}}
+
 # - stat: path=/etc/init/mesos-master.conf
 #   register: mesos_master_exists
 #   notify:
