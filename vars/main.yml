@@ -4,7 +4,7 @@ mesos_playbook_version: "0.1.5"
 platform_url_name: "ubuntu"
 package_type: "deb"
 
-mesos_install_mode: "master" # {master|slave}
+mesos_install_mode: "master" # {master|slave|master-slave}
 # used to compose mesos_download_url
 mesos_version: "0.15.0"
 mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
