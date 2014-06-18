@@ -5,5 +5,6 @@ platform_url_name: "ubuntu"
 package_type: "deb"
 
 mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
-mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
+#mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
+mesos_file_name: "mesos_{{mesos_version}}~{{platform_url_name}}{{ansible_distribution_version}}%2B1_{{mesos_arch}}.{{package_type}}"
 mesos_dest_file: "/tmp/{{mesos_file_name}}"

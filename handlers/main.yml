@@ -1,9 +1,12 @@
 ---
 # i.e. upgrade mesos, templates stay the same...
 - name: Restart mesos-master
-  service: name=mesos-master state=restarted enabled=yes sleep=5
-  # when: mesos_install_mode == "master"
+  shell: start mesos-master || restart mesos-master
 
-- name: Restart mesos-slave
-  service: name=mesos-slave state=restarted enabled=yes sleep=5
+- name: Restart mesos-slave 
+  shell: start mesos-slave || restart mesos-slave
+#service: name=mesos-slave state=restarted enabled=yes sleep=5
   # when: mesos_install_mode == "slave"
+
+- name: restart zookeeper
+  service: name=zookeeper state=restarted enabled=yes

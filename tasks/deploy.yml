@@ -45,3 +45,16 @@
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-slave
+
+- name: Copy the configuration file for zookeeper
+  template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: initialize the zookeeper
+  template: src=zoo_id.j2 dest=/var/lib/zookeeper/myid
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: initialize the zookeeper
+  template: src=zoo_id.j2 dest=/etc/zookeeper/conf/myid
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  notify: restart zookeeper
