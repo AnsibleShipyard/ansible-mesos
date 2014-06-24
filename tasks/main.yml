@@ -1,7 +1,4 @@
 ---
-# Here I am force loading default since ansible processes includes
-# first, then implicitly loads default.
-- include_vars: "{{ ansible_os_family }}.yml"
 
 - include: common.yml
 

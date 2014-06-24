@@ -25,6 +25,11 @@
 #   pause: seconds=10
 
 # == Delete to force template creation
+- name: Initialize zookeeper
+  template: src=zoo_id.j2 dest=/etc/zookeeper/conf/myid
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  notify: restart zookeeper
+
 - name: Delete master script
   file: path=/etc/init/mesos-master.conf state=absent
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
@@ -50,11 +55,3 @@
   template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
-- name: initialize the zookeeper
-  template: src=zoo_id.j2 dest=/var/lib/zookeeper/myid
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
-
-- name: initialize the zookeeper
-  template: src=zoo_id.j2 dest=/etc/zookeeper/conf/myid
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
-  notify: restart zookeeper

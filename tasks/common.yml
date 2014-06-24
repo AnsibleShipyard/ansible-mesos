@@ -1,8 +1,11 @@
 ---
 - debug: msg="Install Mode is {{mesos_install_mode}}"
 
-- name: Download mesos v{{mesos_version}}
-  get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
+- name: Delete master script
+  file: path=/etc/default/mesos.conf state=absent
 
-- name: Download mesos v{{mesos_version}} python bindings (egg file)
-  get_url: url={{mesos_python_download_url}} dest={{mesos_python_dest_file}}
+- name: Mesos default config file
+  template: src=mesos.j2 dest=/etc/default/mesos
+
+- name: create work dir
+  file: path=/var/mesos state=directory

@@ -6,17 +6,24 @@ package_type: "deb"
 
 mesos_install_mode: "master" # {master|slave|master-slave}
 # used to compose mesos_download_url
-mesos_version: "0.15.0"
+mesos_version: "0.19.0"
 mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
-#mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
 mesos_file_name: "mesos_{{mesos_version}}~{{platform_url_name}}{{ansible_distribution_version}}%2B1_{{mesos_arch}}.{{package_type}}"
+# mesosphere has different pattern for 0.19.0, see exmaples
+#mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
+#http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.19.0~ubuntu14.04%2B1_amd64.deb
+#http://downloads.mesosphere.io/master/ubuntu/13.10/mesos_0.18.2_amd64.deb
 mesos_dest_file: "/tmp/{{mesos_file_name}}"
-#mesos_python_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.egg"
-mesos_python_file_name: "mesos-{{mesos_version}}_rc2-py2.7-linux-x86_64.egg" #_{{mesos_arch}}.egg"
+mesos_python_file_name: "mesos-{{mesos_version}}_rc2-py2.7-linux-x86_64.egg" 
+# ditto for python
+# http://downloads.mesosphere.io/master/ubuntu/14.04/mesos-0.19.0_rc2-py2.7-linux-x86_64.egg
+# http://downloads.mesosphere.io/master/ubuntu/13.10/mesos-0.18.2-py2.7-linux-x86_64.egg
 mesos_python_dest_file: "/tmp/{{mesos_python_file_name}}"
 mesos_base_url: "http://downloads.mesosphere.io/master"
 mesos_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_file_name}}"
 mesos_python_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_python_file_name}}"
+
+  #http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.19.0_amd64.deb
 
 # exec info
 mesos_bin_name: mesos
@@ -26,24 +33,13 @@ mesos_slave_bin: "{{mesos_bin_name}}-slave"
 
 # conf file settings
 mesos_cluster_name: "mesos_cluster"
-mesos_local_addr: "{{ansible_fqdn}}" # {ansible_all_ipv4_addresses[1], facter_ipaddress_eth1, etc...}
-mesos_local_port: "2181"
+mesos_hostname: "{{ inventory_hostname }}"
 mesos_log_location: "/var/log/mesos"
 mesos_ulimit: "-n 8192"
-mesos_zookeepers: "zk://{{mesos_local_addr}}:{{mesos_local_port}}/mesos" # used by masters to find zookeeper
-mesos_masters: "zk://{{mesos_local_addr}}:{{mesos_local_port}}/mesos" # used by slaves
 mesos_options: "--log_dir=$LOGS"
 work_dir: "/var/mesos"
 quorum: "2"
 zookeeper_leader_port: "2888"
 zookeeper_election_port: "3888"
-
-mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
-mesos_file_name: "mesos_{{mesos_version}}_{{mesos_arch}}.{{package_type}}"
-mesos_dest_file: "/tmp/{{mesos_file_name}}"
-
-platform_url_name: "ubuntu"
-package_type: "deb"
-
-# /usr/local/sbin/mesos-master --zk=zk://mlh-m2.amer.gettywan.com:2181/mesos --ip=10.196.10.74 --cluster=mesos_cluster --log_dir=/var/log/mesos --work_dir=/var/mesos --quorum=1
-#
+zookeeper_client_port: "2181"
+mesos_zookeeper_masters: "zk://{{ groups.mesos_masters | join(':' + zookeeper_client_port + ',') }}:{{ zookeeper_client_port }}/mesos" 

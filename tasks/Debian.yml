@@ -21,11 +21,12 @@
     - zookeeperd
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
+- name: Download mesos {{mesos_version}} deb package
+  get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
+
+- name: Download mesos {{mesos_version}} python bindings (egg file)
+  get_url: url={{mesos_python_download_url}} dest={{mesos_python_dest_file}}
+
 - name: Install Mesos Debian Package
-  shell: dpkg -i {{mesos_dest_file}}
-
-- name: Mesos default config file
-  template: src=mesos.j2 dest=/etc/default/mesos
-
-- name: create work dir
-  file: path=/var/mesos state=directory
+  shell: DEBIAN_FRONTENT=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 
+  sudo: yes
