@@ -1,0 +1,39 @@
+---
+# == Work Dir for replicated log
+- name: create work dir
+  file: path=/var/mesos state=directory
+
+# == Python Bindings
+- name: Download mesos {{mesos_version}} python bindings (egg file)
+  get_url: url={{mesos_python_download_url}} dest={{mesos_python_dest_file}}
+
+- name: Install Mesos python bindings
+  shell: easy_install {{mesos_python_dest_file}}
+
+# ==  Config scripts: Delete and recreate
+- name: Delete master script
+  file: path=/etc/default/mesos.conf state=absent
+
+- name: Delete master script
+  file: path=/etc/init/mesos-master.conf state=absent
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Delete slave script
+  file: path=/etc/init/mesos-slave.conf state=absent
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
+# == Configure and recreate
+- name: Mesos default config file
+  template: src=mesos.j2 dest=/etc/default/mesos
+
+- name: Mesos master script
+  template: src=mesos-master.j2 dest=/etc/init/mesos-master.conf
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-master
+
+- name: Mesos slave script
+  template: src=mesos-slave.j2 dest=/etc/init/mesos-slave.conf
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-slave

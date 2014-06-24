@@ -8,6 +8,8 @@
     - gcc
     - python-setuptools
     - python-dev
+    - python-protobuf
+    - python-dev
     - libcurl4-openssl-dev
     - libsasl2-2
     - libsasl2-dev
@@ -15,17 +17,13 @@
     - unzip
 
 - name: Install master os packages
-  apt: pkg={{item}} state=present update_cache=yes
+  apt: pkg={{item}} state=present 
   with_items:
-    - zookeeper-bin
     - zookeeperd
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
 - name: Download mesos {{mesos_version}} deb package
   get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
-
-- name: Download mesos {{mesos_version}} python bindings (egg file)
-  get_url: url={{mesos_python_download_url}} dest={{mesos_python_dest_file}}
 
 - name: Install Mesos Debian Package
   shell: DEBIAN_FRONTENT=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 

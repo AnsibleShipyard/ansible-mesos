@@ -1,9 +1,9 @@
 ---
-
-- include: common.yml
-
 # Here we are using the debian package if debian
 - include: Debian.yml
   when: ansible_os_family == "Debian"
 
-- include: deploy.yml
+- include: zookeeper.yml
+  when: mesos_install_modedd == "master" or mesos_install_mode == "master-slave"
+
+- include: mesos.yml
