@@ -8,6 +8,6 @@
   shell: start mesos-slave || restart mesos-slave
   sudo: yes
 
-- name: restart zookeeper
-  shell: start zookeeeper || restart zookeeper 
+- name: Restart zookeeper
+  shell: start zookeeper || restart zookeeper 
   sudo: yes

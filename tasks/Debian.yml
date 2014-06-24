@@ -10,6 +10,7 @@
     - python-dev
     - python-protobuf
     - python-dev
+    - python-pip
     - libcurl4-openssl-dev
     - libsasl2-2
     - libsasl2-dev

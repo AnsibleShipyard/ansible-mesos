@@ -4,6 +4,6 @@
   when: ansible_os_family == "Debian"
 
 - include: zookeeper.yml
-  when: mesos_install_modedd == "master" or mesos_install_mode == "master-slave"
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
 - include: mesos.yml
