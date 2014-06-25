@@ -1,7 +1,7 @@
 ansible-mesos
 =============
 
-Mesos Playbook for Ansible, with multi-master zookeeper support and [Deimos](https://github.com/mesosphere/deimos) installed for running docker containers..
+Mesos Playbook for Ansible, with multi-master zookeeper support and [Deimos](https://github.com/mesosphere/deimos) installed for running docker containers. Install this on Ubuntu 14.04 LTS.
 
 NOTE: This role requires the following roles:
 
