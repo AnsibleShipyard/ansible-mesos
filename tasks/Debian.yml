@@ -27,5 +27,5 @@
   get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
 
 - name: Install Mesos Debian Package
-  shell: DEBIAN_FRONTENT=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 
+  shell: DEBIAN_FRONTEND=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 
   sudo: yes

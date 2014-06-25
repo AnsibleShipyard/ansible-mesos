@@ -10,15 +10,31 @@
 - name: Install Mesos python bindings
   shell: easy_install {{mesos_python_dest_file}}
 
-# ==  Config scripts: Delete and recreate
-- name: Delete master script
-  file: path=/etc/default/mesos.conf state=absent
+# == Deimos
+  name: Install Deimos with pip
+  shell: pip install deimos
+  sudo: yes 
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
 
-- name: Delete master script
+# ==  Config scripts: Delete and recreate
+- name: Delete mesos zk config
+  file: path=/etc/mesos/ state=absent 
+  
+- name: Delete mesos-master defaults
+  file: path=/etc/defaults/mesos-master state=absent 
+
+- name: Delete mesos-slave defaults 
+  file: path=/etc/defaults/mesos-slave state=absent 
+
+- name: Delete mesos config 
+  file: path=/etc/default/mesos.conf state=absent
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Delete mesos-master init script
   file: path=/etc/init/mesos-master.conf state=absent
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
-- name: Delete slave script
+- name: Delete mesos-slave init script
   file: path=/etc/init/mesos-slave.conf state=absent
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
 

@@ -19,9 +19,9 @@ script
     ${PORT:+--port=$PORT} \
     ${WORKDIR:+--work_dir=$WORKDIR} \
     ${ISOLATION:+--isolation=$ISOLATION} \
+    ${CONTAINERIZER_PATH:+--containerizer_path=$CONTAINERIZER_PATH} \
     ${CGROUPS_HIERARCHY:+--cgroups_hierarchy=$CGROUPS_HIERARCHY} \
     ${CGROUPS_ROOT:+--cgroups_root=$CGROUPS_ROOT} \
-    ${CGROUPS_SUBSYSTEMS:+--cgroups_subsystems=$CGROUPS_SUBSYSTEMS} \
     $OPTS \
     >> "$LOGS"/slave.log 2>&1
 end script
