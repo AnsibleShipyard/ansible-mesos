@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKERNAME="AnsibleShipyard/ansible-mesos"
+DOCKERNAME="ansibleshipyard/ansible-mesos"
 
 time docker build -t $DOCKERNAME .
 

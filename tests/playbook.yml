@@ -5,7 +5,7 @@
     - java
     - sbt
     - scala
-    - mesos
+    - ./
   vars:
     mesos_version: "0.18.0"
     mesos_cluster_name: testing
