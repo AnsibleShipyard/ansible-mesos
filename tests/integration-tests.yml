@@ -1,0 +1,15 @@
+---
+#
+# integration-tests.yml
+#
+
+- hosts: all
+  sudo: True
+  tasks:
+    # Tests
+    - name: Check mesos port
+      command: curl -sI localhost:5050 | head -1
+      register: mesos_status
+    - debug: msg="Mesos endpoint returned {{mesos_status.stdout}}"
+    - fail: msg="Mesos endpoint did not return HTTP/1.1 200 OK"
+      when: mesos_status.stdout != "HTTP/1.1 200 OK"
