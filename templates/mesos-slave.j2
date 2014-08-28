@@ -3,22 +3,11 @@
 
 description "mesos slave"
 
-start on runlevel [2345]
+# Start just after the System-V jobs (rc) to ensure networking and zookeeper
+# are started. This is as simple as possible to ensure compatibility with
+# Ubuntu, Debian, CentOS, and RHEL distros. See:
+# http://upstart.ubuntu.com/cookbook/#standard-idioms
+start on stopped rc RUNLEVEL=[2345]
 respawn
 
-script
-  [ ! -f /etc/default/mesos ]    || . /etc/default/mesos
-  [ ! -f /etc/mesos/slave.conf ] || . /etc/mesos/slave.conf
-  [ -z "${ULIMIT:-}" ] || ulimit $ULIMIT
-  exec /usr/local/sbin/mesos-slave \
-    ${MASTER:+--master=$MASTER} \
-    ${IP:+--ip=$IP} \
-    ${PORT:+--port=$PORT} \
-    ${WORKDIR:+--work_dir=$WORKDIR} \
-    ${ISOLATION:+--isolation=$ISOLATION} \
-    ${CGROUPS_HIERARCHY:+--cgroups_hierarchy=$CGROUPS_HIERARCHY} \
-    ${CGROUPS_ROOT:+--cgroups_root=$CGROUPS_ROOT} \
-    ${CGROUPS_SUBSYSTEMS:+--cgroups_subsystems=$CGROUPS_SUBSYSTEMS} \
-    $OPTS \
-    >> "$LOGS"/slave.log 2>&1
-end script
+exec /usr/bin/mesos-init-wrapper slave
