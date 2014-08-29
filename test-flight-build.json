@@ -1,0 +1,25 @@
+{
+  "runTests": false,
+  "owner": "testflight",
+  "imageName": "ansible-mesos",
+  "from": "jasongiedymin/ansible-base-ubuntu",
+  "requires": [
+    "ansible-java",
+    "ansible-scala",
+    "ansible-sbt"
+  ],
+  "version": "0.1.0",
+  "add": {
+    "simple": [
+      "handlers",
+      "tasks",
+      "templates",
+      "vars"
+    ]
+  },
+  "expose": [8080],
+  "resourceShare": {
+    "mem": 1024,
+    "cpu": 2
+  }
+}
