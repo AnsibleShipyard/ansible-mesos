@@ -1,5 +1,5 @@
 ---
-mesos_playbook_version: "0.2.0"
+mesos_playbook_version: "0.2.1"
 
 platform_url_name: "ubuntu"
 package_type: "deb"
