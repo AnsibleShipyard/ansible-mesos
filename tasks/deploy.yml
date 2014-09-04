@@ -34,13 +34,16 @@
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
 
 # == Re-enable services as necessary
-- name: Mesos master script
+- name: Overwrite Zookeeper file
+  template: src=zk.j2 dest=/etc/mesos/zk
+
+- name: Overwrite mesos-master int script
   template: src=mesos-master.j2 dest=/etc/init/mesos-master.conf
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-master
 
-- name: Mesos slave script
+- name: Overwrite mesos-slave init script
   template: src=mesos-slave.j2 dest=/etc/init/mesos-slave.conf
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:

@@ -1,0 +1,12 @@
+---
+#
+# Test Playbook
+#
+
+- hosts: localhost
+  connection: local
+  sudo: yes
+  roles:
+    - {role: ../../, mesos_install_mode: "master-slave"}
+
+- include: main.yml
