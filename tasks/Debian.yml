@@ -16,7 +16,7 @@
     - libcurl3
 
 - name: Install Docker
-  apt: pkg={{item}} state=present update_cache=yes
+  apt: pkg=docker.io state=present update_cache=yes
   when: docker_support == "yes"
 
 - name: Install Mesos Debian Package
