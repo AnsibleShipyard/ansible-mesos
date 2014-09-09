@@ -9,4 +9,7 @@
 - include: Debian.yml
   when: ansible_os_family == "Debian"
 
+- include: slave.yml
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
 - include: deploy.yml
