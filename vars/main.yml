@@ -33,3 +33,7 @@ mesos_ulimit: "-n 8192"
 mesos_zookeepers: "zk://{{mesos_local_addr}}:{{mesos_local_port}}/mesos" # used by masters to find zookeeper
 mesos_masters: "zk://{{mesos_local_addr}}:{{mesos_local_port}}/mesos" # used by slaves
 mesos_options: "--log_dir=$LOGS"
+mesos_slave_checkpoint: "no"
+
+# enable Docker support
+docker_support: "no"

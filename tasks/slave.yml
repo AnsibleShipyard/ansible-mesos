@@ -5,3 +5,7 @@
 - name: Turn on slave checkpoint
   shell: touch /etc/mesos-slave/checkpoint
   when: mesos_slave_checkpoint == "yes"
+
+- name: Support Docker containerizers
+  shell: echo 'docker,mesos' > /etc/mesos-slave/containerizers
+  when: docker_support == "yes"

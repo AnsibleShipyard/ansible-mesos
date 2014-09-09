@@ -1,5 +1,5 @@
 ---
-- name: Install os packages
+- name: Install Debian OS packages
   apt: pkg={{item}} state=present update_cache=yes
   with_items:
     - wget
@@ -14,6 +14,10 @@
     - libsasl2-2
     - libsasl2-dev
     - libcurl3
+
+- name: Install Docker
+  apt: pkg={{item}} state=present update_cache=yes
+  when: docker_support == "yes"
 
 - name: Install Mesos Debian Package
   shell: dpkg -i {{mesos_dest_file}}
