@@ -10,46 +10,26 @@
 - name: Install Mesos python bindings
   shell: easy_install {{mesos_python_dest_file}}
 
-# == Deimos
-  name: Install Deimos with pip
-  shell: pip install deimos
-  sudo: yes 
-  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
-
-# ==  Config scripts: Delete and recreate
-- name: Delete mesos zk config
-  file: path=/etc/mesos/ state=absent 
-  
-- name: Delete mesos-master defaults
-  file: path=/etc/defaults/mesos-master state=absent 
-
-- name: Delete mesos-slave defaults 
-  file: path=/etc/defaults/mesos-slave state=absent 
-
-- name: Delete mesos config 
-  file: path=/etc/default/mesos.conf state=absent
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
-
-- name: Delete mesos-master init script
-  file: path=/etc/init/mesos-master.conf state=absent
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
-
-- name: Delete mesos-slave init script
-  file: path=/etc/init/mesos-slave.conf state=absent
-  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
-
 # == Configure and recreate
 - name: Mesos default config file
-  template: src=mesos.j2 dest=/etc/default/mesos
+  template: src=conf-mesos.j2 dest=/etc/default/mesos
+
+- name: Mesos Master config file
+  template: src=conf-mesos-master.j2 dest=/etc/default/mesos-master
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Mesos Salve config file
+  template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
 
 - name: Mesos master script
-  template: src=mesos-master.j2 dest=/etc/init/mesos-master.conf
+  template: src=init-mesos-master.j2 dest=/etc/init/mesos-master.conf
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-master
 
 - name: Mesos slave script
-  template: src=mesos-slave.j2 dest=/etc/init/mesos-slave.conf
+  template: src=init-mesos-slave.j2 dest=/etc/init/mesos-slave.conf
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-slave

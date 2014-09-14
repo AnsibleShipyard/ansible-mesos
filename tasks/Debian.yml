@@ -17,14 +17,11 @@
     - libcurl3
     - unzip
 
-- name: Install master os packages
+- name: Install zookeeper packages
   apt: pkg={{item}} state=present 
   with_items:
     - zookeeperd
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
-
-- name: Download mesos {{mesos_version}} deb package
-  get_url: url={{mesos_download_url}} dest={{mesos_dest_file}}
 
 - name: Install Mesos Debian Package
   shell: DEBIAN_FRONTEND=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 

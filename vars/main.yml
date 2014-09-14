@@ -1,9 +1,6 @@
 ---
 mesos_playbook_version: "0.2.0"
 
-platform_url_name: "ubuntu"
-package_type: "deb"
-
 mesos_install_mode: "master" # {master|slave|master-slave}
 # used to compose mesos_download_url
 mesos_version: "0.20.0"
@@ -11,14 +8,14 @@ mesos_arch: "amd64" # alt for >= 13.10 is facter_architecture
 mesos_file_name: "mesos_{{mesos_version}}-1.0.{{platform_url_name}}{{ansible_distribution_version.split('.')|join('')}}_{{mesos_arch}}.{{package_type}}"
 mesos_dest_file: "/tmp/{{mesos_file_name}}"
 
+#http://downloads.mesosphere.io/master/ubuntu/14.04/mesos-0.20.0-py2.7-linux-x86_64.egg
+
 python_arch: "py2.7-linux-x86_64"
 mesos_python_file_name: "mesos-{{mesos_version}}-{{python_arch}}.egg"
 mesos_python_dest_file: "/tmp/{{mesos_python_file_name}}"
 mesos_base_url: "http://downloads.mesosphere.io/master"
 mesos_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_file_name}}"
 mesos_python_download_url: "{{mesos_base_url}}/{{platform_url_name}}/{{ansible_distribution_version}}/{{mesos_python_file_name}}"
-
-  #http://downloads.mesosphere.io/master/ubuntu/14.04/mesos_0.19.0_amd64.deb
 
 # exec info
 mesos_bin_name: mesos
@@ -41,4 +38,5 @@ zookeeper_client_port: "2181"
 mesos_zookeeper_masters: "zk://{{ groups.mesos_masters | join(':' + zookeeper_client_port + ',') }}:{{ zookeeper_client_port }}/mesos" 
 
 # Containerizer
-containerizers: "'docker,mesos'"
+mesos_containerizers: "docker,mesos"
+mesos_executor_timeout: "5mins"

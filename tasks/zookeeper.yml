@@ -1,10 +1,4 @@
 ---
-- name: Delete zookeeper configuration
-  file: path=/etc/zookeeper/conf/zoo.cfg state=absent
-
-- name: Delete zookeeper myid file
-  file: path=/etc/zookeeper/conf/myid state=absent
-
 - name: Create zookeeper config file
   template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"

@@ -1,0 +1,12 @@
+---
+#
+# Test Playbook
+#
+
+- hosts: localhost
+  connection: local
+  sudo: yes
+  roles:
+    - {role: ../../, mesos_ip: "{{ ansible_eth1.ipv4.address }}", mesos_install_mode: "master-slave"}
+
+- include: main.yml
