@@ -23,6 +23,10 @@
     - zookeeperd
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
+- name: Install Debian Docker
+  shell: curl -sSL https://get.docker.io/ubuntu/ | sudo sh
+  sudo: yes
+
 - name: Install Mesos Debian Package
   shell: DEBIAN_FRONTEND=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 
   sudo: yes

@@ -10,6 +10,16 @@
 - name: Install Mesos python bindings
   shell: easy_install {{mesos_python_dest_file}}
 
+# == Remove default configs
+- name: Remove Default Mesos Configs
+  file: state=absent path=/etc/mesos/
+
+- name: Remove Default Mesos-Master Config
+  file: state=absent path=/etc/mesos-master/
+
+- name: Remove Default Mesos-Slave Config
+  file: state=absent path=/etc/mesos-slave/
+
 # == Configure and recreate
 - name: Mesos default config file
   template: src=conf-mesos.j2 dest=/etc/default/mesos
