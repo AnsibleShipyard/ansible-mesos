@@ -10,6 +10,7 @@ NOTE: This role requires the following roles:
 ## Overview
 
 - Installs Docker
+- Relies on mesos_masters group to configure zookeeper, masters
 - Supports master, slave, and master-slave options
 - Installs Zookeeper on master
 - mesos_masters group determines zookeeper and master configuration
