@@ -18,3 +18,7 @@ NOTE: This role requires the following roles:
 - Uses upstart to launch /usr/bin/mesos-init-wrapper
 
 See [mhamrah/ansible-mesos-playbook](https://github.com/mhamrah/ansible-mesos-playbook) for an example playbook which sets up a multi-node mesos cluster. The example also includes [Ansible-Marathon](https://github.com/mhamrah/ansible-marathon) for running applications on Mesos.
+
+## Notes
+
+Currently supports Mesos 0.20. Note that mesos 0.20 only supports docker in --net=host mode.
