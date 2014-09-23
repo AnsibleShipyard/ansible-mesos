@@ -1,29 +1,4 @@
 ---
-- name: Install Mesos python bindings
-  shell: easy_install {{mesos_python_dest_file}}
-
-# - stat: path=/etc/init/mesos-master.conf
-#   register: mesos_master_exists
-#   notify:
-#     - Disable mesos-master
-
-# - stat: path=/etc/init/mesos-slave.conf
-#   register: mesos_slave_exists
-#   notify:
-#     - Disable mesos-slave
-
-# == Disable services
-# - name: Disable mesos-master
-#   service: name=mesos-master state=stopped enabled=no sleep=10
-#   when: mesos_master_exists.stat.exists == True
-
-# - name: Disable mesos-slave
-#   service: name=mesos-slave state=stopped enabled=no sleep=10
-#   when: mesos_slave_exists.stat.exists == True
-
-# - name: Pause to allow services to catch up
-#   pause: seconds=10
-
 # == Delete to force template creation
 - name: Delete master script
   file: path=/etc/init/mesos-master.conf state=absent
