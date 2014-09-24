@@ -11,6 +11,7 @@
 
     - fail: msg="mesos-master service is not running."
       when: master_service_status.stdout == ""
+      when: ansible_os_family == "Debian"
 
     - name: Check mesos-slave service
       shell: service mesos-slave status | grep "running"
@@ -18,3 +19,4 @@
       ignore_errors: yes
     - fail: msg="mesos-slave service is not running."
       when: slave_service_status.stdout == ""
+      when: ansible_os_family == "Debian"
