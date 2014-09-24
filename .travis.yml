@@ -7,10 +7,10 @@ env:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y curl
+  - sudo apt-get install curl -y
 
 install:
-  - pip install ansible
+  - pip install -U ansible
 
   # Add ansible.cfg to pick up roles path.
   - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
