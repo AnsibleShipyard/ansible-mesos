@@ -11,9 +11,7 @@
 
     - debug: msg=master_service_status.stdout
     - debug: msg={{master_service_status.stdout}}
-    - debug: msg={{master_service_status}}
     - debug: msg={{master_service_status.rc}}
-    - debug: msg={{master_service_status.stderr}}
     - debug: msg={{master_service_status.stdout_lines}}
 
     - name: Doing status only

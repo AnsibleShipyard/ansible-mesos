@@ -23,3 +23,16 @@
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-slave
+
+- name: Start mesos-master
+  service: name=mesos-master state=started enabled=yes
+  register: master_start_status
+  ignore_errors: yes
+  when: ansible_os_family == "Debian"
+
+- debug: msg={{master_start_status.stdout_lines}}
+
+- name: Start mesos-slave
+  service: name=mesos-slave state=started enabled=yes
+  ignore_errors: yes
+  when: ansible_os_family == "Debian"
