@@ -30,10 +30,10 @@
   ignore_errors: yes
   # when: ansible_os_family == "Debian"
 
-- debug: msg={{master_start_status}}
-- debug: msg={{master_start_status.rc}}
-- debug: msg={{master_start_status.stdout}}
-- debug: msg={{master_start_status.stderr}}
+- debug: msg="{{master_start_status}}"
+- debug: msg="{{master_start_status.rc}}"
+- debug: msg="{{master_start_status.stdout}}"
+- debug: msg="{{master_start_status.stderr}}"
 
 - name: Start mesos-slave
   service: name=mesos-slave state=started enabled=yes
