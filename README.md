@@ -1,7 +1,7 @@
-ansible-mesos
+ansible-mesos - Ansible Playbook for Mesos
 =============
 
-Mesos Playbook for Ansible
+[![Build Status](https://travis-ci.org/AnsibleShipyard/ansible-mesos.svg?branch=master)](https://travis-ci.org/AnsibleShipyard/ansible-mesos)
 
 Support open source!
 
