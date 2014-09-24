@@ -9,6 +9,12 @@
       register: master_service_status
       ignore_errors: yes
 
+    - debug: msg=master_service_status.stdout
+    - debug: msg={{master_service_status.stdout}}
+    - debug: msg={{master_service_status}}
+    - debug: msg={{master_service_status.rc}}
+    - debug: msg={{master_service_status.stderr}}
+
     - fail: msg="mesos-master service is not running."
       when: master_service_status.stdout == ""
 
