@@ -23,15 +23,3 @@
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-slave
-
-- name: Start mesos-master
-  service: name=mesos-master state=started enabled=yes
-  register: master_start_status
-
-- debug: msg="{{master_start_status}}"
-
-- name: Start mesos-slave
-  service: name=mesos-slave state=started enabled=yes
-  register: slave_start_status
-
-- debug: msg="{{slave_start_status}}"
