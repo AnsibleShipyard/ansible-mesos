@@ -5,9 +5,15 @@
   tasks:
     # Tests
     - name: Check mesos-master service
-      shell: service mesos-master status | grep "running"
+      shell: service mesos-master status
       register: master_service_status
-      ignore_errors: yes
+      # ignore_errors: yes
+
+    - debug: msg={{master_service_status.stderr}}
+    - debug: msg={{master_service_status.stdout}}
+    - debug: msg={{master_service_status.rc}}
+    - debug: msg={{master_service_status.stdout_lines}}
+
     - fail: msg="mesos-master service is not running."
       when: master_service_status.stdout == ""
 
