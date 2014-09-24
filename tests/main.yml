@@ -14,6 +14,15 @@
     - debug: msg={{master_service_status}}
     - debug: msg={{master_service_status.rc}}
     - debug: msg={{master_service_status.stderr}}
+    - debug: msg={{master_service_status.stdout_lines}}
+
+    - name: Doing status only
+      shell: service mesos-master status
+      register: master_service_status_only
+      ignore_errors: yes
+    - debug: msg={{master_service_status_only.rc}}
+    - debug: msg={{master_service_status_only.stdout}}
+    - debug: msg={{master_service_status_only.stdout_lines}}
 
     - fail: msg="mesos-master service is not running."
       when: master_service_status.stdout == ""
