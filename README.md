@@ -21,4 +21,4 @@ See [mhamrah/ansible-mesos-playbook](https://github.com/mhamrah/ansible-mesos-pl
 
 ## Notes
 
-Currently supports Mesos 0.20. Note that mesos 0.20 only supports docker in --net=host mode.
+Currently defaults to Mesos 0.20.1.
