@@ -19,7 +19,7 @@
   template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg
 
 - name: Create Zookeeper Directory
-  file: state=directory path=/var/lib/zookeeper/
+  file: state=directory path=/var/lib/zookeeper/ owner=zookeeper group=zookeeper
 
 - name: Create zookeeper myid file
   template: src=zoo_id.j2 dest=/var/lib/zookeeper/myid
