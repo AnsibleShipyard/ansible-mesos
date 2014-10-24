@@ -3,16 +3,12 @@
 - name: create work dir
   file: path=/var/mesos state=directory
 
-# == Python Bindings
-- name: Download mesos {{mesos_version}} python bindings (egg file)
-  get_url: url={{mesos_python_download_url}} dest={{mesos_python_dest_file}}
-
-- name: Install Mesos python bindings
-  shell: easy_install {{mesos_python_dest_file}}
-
 # == Remove default configs
 - name: Remove Default Mesos Configs
   file: state=absent path=/etc/mesos/
+
+- name: Remove Mesos ZK File
+  file: state=absent path=/etc/mesos/zk
 
 - name: Remove Default Mesos-Master Config
   file: state=absent path=/etc/mesos-master/

@@ -11,3 +11,4 @@
 - name: Restart zookeeper
   shell: start zookeeper || restart zookeeper 
   sudo: yes
+  when: ansible_os_family == "Debian"

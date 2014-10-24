@@ -8,6 +8,9 @@
 - include: Debian.yml
   when: ansible_os_family == "Debian"
 
+- include: RedHat.yml
+  when: ansible_os_family == "RedHat"
+
 - include: zookeeper.yml
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 

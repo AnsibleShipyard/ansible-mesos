@@ -1,21 +1,19 @@
 ---
+- name: Add apt-key
+  apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
+
+- name: Add mesosphere repo
+  apt_repository: repo='deb http://repos.mesosphere.io/{{ansible_distribution|lower}} {{ansible_distribution_release|lower}} main' state=present
+
 - name: Install os packages
   apt: pkg={{item}} state=present update_cache=yes
   with_items:
     - wget
     - curl
-    - g++
-    - gcc
+    - unzip
     - python-setuptools
     - python-dev
-    - python-protobuf
-    - python-dev
-    - python-pip
-    - libcurl4-openssl-dev
-    - libsasl2-2
-    - libsasl2-dev
-    - libcurl3
-    - unzip
+    - mesos={{mesos_version}}-1.0.{{ansible_distribution|lower}}{{ansible_distribution_version.split('.')|join('')}}
 
 - name: Install zookeeper packages
   apt: pkg={{item}} state=present 
@@ -25,8 +23,4 @@
 
 - name: Install Debian Docker
   shell: curl -sSL https://get.docker.io/ubuntu/ | sudo sh
-  sudo: yes
-
-- name: Install Mesos Debian Package
-  shell: DEBIAN_FRONTEND=noninteractive dpkg -i --force-confnew {{mesos_dest_file}} 
   sudo: yes
