@@ -5,6 +5,9 @@
 - name: Add mesosphere repo
   apt_repository: repo='deb http://repos.mesosphere.io/{{ansible_distribution|lower}} {{ansible_distribution_release|lower}} main' state=present
 
+- include: Debian_zookeeper.yml
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
 - name: Install os packages
   apt: pkg={{item}} state=present update_cache=yes
   with_items:
@@ -14,12 +17,6 @@
     - python-setuptools
     - python-dev
     - mesos={{mesos_version}}-1.0.{{ansible_distribution|lower}}{{ansible_distribution_version.split('.')|join('')}}
-
-- name: Install zookeeper packages
-  apt: pkg={{item}} state=present 
-  with_items:
-    - zookeeperd
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
 - name: Install Debian Docker
   shell: curl -sSL https://get.docker.io/ubuntu/ | sudo sh

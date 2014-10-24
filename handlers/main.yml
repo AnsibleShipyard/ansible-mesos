@@ -7,8 +7,3 @@
 - name: Restart mesos-slave 
   shell: start mesos-slave || restart mesos-slave
   sudo: yes
-
-- name: Restart zookeeper
-  shell: start zookeeper || restart zookeeper 
-  sudo: yes
-  when: ansible_os_family == "Debian"

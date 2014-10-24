@@ -1,11 +1,15 @@
 ---
+- name: Install zookeeper packages
+  apt: pkg={{item}} state=present 
+  with_items:
+    - zookeeperd
+
 - name: Create zookeeper config file
   template: src=zoo.cfg.j2 dest=/etc/zookeeper/conf/zoo.cfg
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
 - name: Create zookeeper myid file
   template: src=zoo_id.j2 dest=/etc/zookeeper/conf/myid
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
-  notify: 
-    - Restart zookeeper
 
+- name: Restart zookeeper
+  shell: start zookeeper || restart zookeeper 
+  sudo: yes

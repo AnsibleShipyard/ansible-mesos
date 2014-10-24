@@ -1,7 +1,7 @@
 ansible-mesos
 =============
 
-Mesos Playbook for Ansible, with multi-master zookeeper support and docker and native mesos executors configured.  Install this on Ubuntu 14.04 LTS. RHEL/Centos is partially supported, you may have issues around Zookeeper. [Read the blog post](http://blog.michaelhamrah.com/2014/06/setting-up-a-multi-node-mesos-cluster-running-docker-haproxy-and-marathon-with-ansible/) for a descriptive overview of how this relates to running the [mhamrah/ansible-mesos-playbook](https://github.com/mhamrah/ansible-mesos-playbook).
+Mesos Playbook for Ansible, with multi-master zookeeper support and docker and native mesos executors configured.  Install this on Ubuntu 14.04 LTS or RHEL/Centos 6.5. RHEL/Centos 7 will fail with zookeeper issues. [Read the blog post](http://blog.michaelhamrah.com/2014/06/setting-up-a-multi-node-mesos-cluster-running-docker-haproxy-and-marathon-with-ansible/) for a descriptive overview of how this relates to running the [mhamrah/ansible-mesos-playbook](https://github.com/mhamrah/ansible-mesos-playbook).
 
 NOTE: This role requires the following roles:
 

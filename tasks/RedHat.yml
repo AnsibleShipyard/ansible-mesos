@@ -2,8 +2,7 @@
 - name: Add mesosphere repo
   yum: name=http://repos.mesosphere.io/el/6/noarch/RPMS/mesosphere-el-repo-6-2.noarch.rpm state=present
 
-- name: Add Cloudera Repo for Zookeeper
-  get_url: url=http://archive.cloudera.com/cdh4/redhat/6/x86_64/cdh/cloudera-cdh4.repo dest=/etc/yum.repos.d/ owner=root group=root mode=0644
+- include: RedHat_zookeeper.yml
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
 - name: Install os packages
@@ -13,13 +12,8 @@
     - curl
     - unzip
     - libselinux-python 
+    - python-setuptools
     - mesos-{{mesos_version}}
-
-- name: Install zookeeper packages
-  yum: name={{item}} state=present 
-  with_items:
-    - zookeeper-server
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
 - name: Install Docker
   yum: pkg=docker-io state=present
