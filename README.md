@@ -1,24 +1,26 @@
 ansible-mesos
 =============
 
-Mesos Playbook for Ansible, with multi-master zookeeper support and docker and native mesos executors configured.  Install this on Ubuntu 14.04 LTS or RHEL/Centos 6.5. RHEL/Centos 7 will fail with zookeeper issues. [Read the blog post](http://blog.michaelhamrah.com/2014/06/setting-up-a-multi-node-mesos-cluster-running-docker-haproxy-and-marathon-with-ansible/) for a descriptive overview of how this relates to running the [mhamrah/ansible-mesos-playbook](https://github.com/mhamrah/ansible-mesos-playbook).
-
-NOTE: This role requires the following roles:
-
-  - ansible-java, or java already installed on the host.
+## Requirements
+  
+  - ansible-zookeeper, or a zookeeper server
 
 ## Overview
 
-- Installs Docker
-- Works in conjuction with Ansible groups and group_vars to configure a multi-node cluster for masters and zookeeper.
-- Supports master, slave, and master-slave installations per node
-- Configures slave containerizers as docker,mesos for docker and native mesos support
-- Puts configuration in /etc/default/mesos, /etc/default/mesos-master and /etc/default/mesos-slave as per [Mesos documentation](http://mesos.apache.org/documentation/latest/configuration/).
-- Removes the default mesosphere /etc/mesos, /etc/mesos-master and /etc/mesos-slave configuration files (favors environment variables, /etc/defaults)
-- Uses upstart to launch /usr/bin/mesos-init-wrapper
+The ansible-mesos role supports the installation and configuration of a mesos cluster with roles for master, slave or a master-slave configuration. 
 
-See [mhamrah/ansible-mesos-playbook](https://github.com/mhamrah/ansible-mesos-playbook) for an example playbook which sets up a multi-node mesos cluster. The example also includes [Ansible-Marathon](https://github.com/mhamrah/ansible-marathon) for running applications on Mesos.
+It optionally supports the installation of docker with slave containerizers configured for both docker and native mesos execution. 
 
-## Notes
+## Configuration
 
-Currently defaults to Mesos 0.20.1.
+Combined with [Ansible groups](http://docs.ansible.com/intro_inventory.html#hosts-and-groups) this role makes it easy to specify a multi-node Mesos master for high availability. There is one variable in your playbook to override:
+
+* ```zookeeper_hostnames``` specifies the list of zookeeper nodes used by Mesos for HA. By default this is the current node hostname and the default zookeeper port ```localhost:2181```. It can be constructed in your playbook by combining all nodes in your zookeeper group:
+
+     - { role: 'ansible-mesos', zookeeper_hostnames: "{{ groups.zookeeper_hosts | join(':' + zookeeper_client_port + ',')  }}:{{ zookeeper_client_port  }}" }
+
+which produces ```zookeeper1:2181,zookeeper2:2181,zookeeper3:2181```. This gets merged into the mesos_zookeeper_masters uri. 
+ 
+You may also want to specify a ```mesos_quorum``` value of ```n/2 + 1```, where n is the number of nodes, as Mesos uses a ```replicated_log``` by default.
+
+See the ```vars/main.yml``` file for specific role settings and [the Mesos configuration page for Mesos settings](http://mesos.apache.org/documentation/latest/configuration/).

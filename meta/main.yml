@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Jason Giedymin
-  description: Ansible NodeJS Playbook Role
+  description: Ansible Mesos Playbook Role
   company: http://jasongiedymin.com
   license: Apache 2
   min_ansible_version: 1.2

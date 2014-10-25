@@ -4,12 +4,6 @@ mesos_playbook_version: "0.3.0"
 mesos_install_mode: "master" # {master|slave|master-slave}
 mesos_version: "0.20.1"
 
-# exec info
-mesos_bin_name: mesos
-mesos_local_bin: "{{mesos_bin_name}}-local"
-mesos_master_bin: "{{mesos_bin_name}}-master"
-mesos_slave_bin: "{{mesos_bin_name}}-slave"
-
 # conf file settings
 mesos_cluster_name: "mesos_cluster"
 mesos_ip: "{{ansible_default_ipv4.address}}"
@@ -18,7 +12,8 @@ mesos_log_location: "/var/log/mesos"
 mesos_ulimit: "-n 8192"
 mesos_options: "--log_dir=$LOGS"
 mesos_work_dir: "/var/mesos"
-mesos_quorum: "2"
+mesos_quorum: "1"
+zookeeper_client_port: "2181"
 zookeeper_hostnames: "{{ mesos_hostname }}:{{ zookeeper_client_port }}"
 mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos" 
 

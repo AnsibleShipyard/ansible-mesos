@@ -3,17 +3,25 @@
   connection: local
   sudo: yes
   tasks:
-    # Tests
+    # Check service status for Mesos Master
     - name: Check mesos-master service
       shell: service mesos-master status | grep "running"
       register: master_service_status
       ignore_errors: yes
+
+    - name: Doing status only
+      shell: service mesos-master status
+      register: master_service_status_only
+      ignore_errors: yes
+
     - fail: msg="mesos-master service is not running."
       when: master_service_status.stdout == ""
 
+    # Check service status for Mesos Slave
     - name: Check mesos-slave service
       shell: service mesos-slave status | grep "running"
       register: slave_service_status
       ignore_errors: yes
+
     - fail: msg="mesos-slave service is not running."
       when: slave_service_status.stdout == ""
