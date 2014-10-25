@@ -2,8 +2,9 @@
 - name: Add mesosphere repo
   yum: name=http://repos.mesosphere.io/el/6/noarch/RPMS/mesosphere-el-repo-6-2.noarch.rpm state=present
 
-- include: RedHat_zookeeper.yml
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+- name: Downloading and enable the EPEL repository definitions.
+  action: command rpm -Uvh --replacepkgs http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+  when: ansible_os_family == "RedHat"
 
 - name: Install os packages
   yum: name={{item}} state=present

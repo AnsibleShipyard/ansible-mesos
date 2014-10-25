@@ -19,12 +19,8 @@ mesos_ulimit: "-n 8192"
 mesos_options: "--log_dir=$LOGS"
 mesos_work_dir: "/var/mesos"
 mesos_quorum: "2"
-zookeeper_leader_port: "2888"
-zookeeper_election_port: "3888"
-zookeeper_client_port: "2181"
 zookeeper_hostnames: "{{ mesos_hostname }}:{{ zookeeper_client_port }}"
 mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos" 
-zoo_id: 1
 
 # Containerizer
 mesos_containerizers: "docker,mesos"
