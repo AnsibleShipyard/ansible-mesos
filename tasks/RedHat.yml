@@ -15,6 +15,3 @@
     - libselinux-python 
     - python-setuptools
     - mesos-{{mesos_version}}
-
-- name: Install Docker
-  yum: pkg=docker-io state=present

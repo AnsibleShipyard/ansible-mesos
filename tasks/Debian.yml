@@ -14,7 +14,3 @@
     - python-setuptools
     - python-dev
     - mesos={{mesos_version}}-1.0.{{ansible_distribution|lower}}{{ansible_distribution_version.split('.')|join('')}}
-
-- name: Install Debian Docker
-  shell: curl -sSL https://get.docker.io/ubuntu/ | sudo sh
-  sudo: yes
