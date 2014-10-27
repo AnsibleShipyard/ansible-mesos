@@ -1,15 +1,15 @@
 ansible-mesos
 =============
 
+## Overview
+
+The ansible-mesos role supports the installation and configuration of a mesos cluster with options for master, slave or a master-slave setup. It supports Ubuntu and RedHat/Centos. 
+
+It also allows the setting of specific slave executors so you can run with native docker support.
+
 ## Requirements
   
   - ansible-zookeeper, or a zookeeper server
-
-## Overview
-
-The ansible-mesos role supports the installation and configuration of a mesos cluster with roles for master, slave or a master-slave configuration. 
-
-It optionally supports the installation of docker with slave containerizers configured for both docker and native mesos execution. 
 
 ## Configuration
 
@@ -22,5 +22,9 @@ Combined with [Ansible groups](http://docs.ansible.com/intro_inventory.html#host
 which produces ```zookeeper1:2181,zookeeper2:2181,zookeeper3:2181```. This gets merged into the mesos_zookeeper_masters uri. 
  
 You may also want to specify a ```mesos_quorum``` value of ```n/2 + 1```, where n is the number of nodes, as Mesos uses a ```replicated_log``` by default.
+
+### Docker Support
+
+Docker is only required on slave nodes and is not installed by default. To use docker with Mesos ensure that docker is installed on slave nodes. You can then set ```mesos_containerizers: "docker,mesos"``` for slave nodes.
 
 See the ```vars/main.yml``` file for specific role settings and [the Mesos configuration page for Mesos settings](http://mesos.apache.org/documentation/latest/configuration/).

@@ -1,9 +1,7 @@
 ---
 # i.e. upgrade mesos, templates stay the same...
 - name: Restart mesos-master
-  shell: start mesos-master || restart mesos-master
-  sudo: yes
+  service: name=mesos-master state=restarted
 
 - name: Restart mesos-slave 
-  shell: start mesos-slave || restart mesos-slave
-  sudo: yes
+  service: name=mesos-slave state=restarted
