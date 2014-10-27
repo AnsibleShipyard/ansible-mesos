@@ -1,5 +1,5 @@
 ---
-mesos_playbook_version: "0.3.0"
+mesos_playbook_version: "0.3.1"
 
 mesos_install_mode: "master" # {master|slave|master-slave}
 mesos_version: "0.20.1"
