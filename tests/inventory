@@ -1,2 +1,6 @@
 [local]
+<<<<<<< HEAD
 localhost
+=======
+localhost
+>>>>>>> upstream/master
