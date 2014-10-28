@@ -8,8 +8,7 @@ mesos_version: "0.20.1"
 mesos_cluster_name: "mesos_cluster"
 mesos_ip: "{{ansible_default_ipv4.address}}"
 mesos_hostname: "{{ inventory_hostname }}"
-mesos_port: "5050" #TODO
-mesos_local_addr: "{{ansible_fqdn}}" #TODO# {ansible_all_ipv4_addresses[1], facter_ipaddress_eth1, etc...}
+mesos_port: "5050"
 mesos_log_location: "/var/log/mesos"
 mesos_ulimit: "-n 8192"
 mesos_options: "--log_dir=$LOGS"
@@ -22,4 +21,3 @@ mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos"
 # Containerizer
 mesos_containerizers: "mesos"
 mesos_executor_timeout: "5mins"
-mesos_slave_checkpoint: "no" #TODO
