@@ -1,3 +1,0 @@
----
-- name: Overwrite hostname config
-  template: src=hostname.j2 dest=/etc/mesos-slave/hostname

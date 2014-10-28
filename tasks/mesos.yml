@@ -24,7 +24,7 @@
   template: src=conf-mesos-master.j2 dest=/etc/default/mesos-master
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
 
-- name: Mesos Salve config file
+- name: Mesos Slave config file
   template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
 
