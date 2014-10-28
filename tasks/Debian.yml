@@ -10,21 +10,7 @@
   with_items:
     - wget
     - curl
-    - g++
-    - gcc
-    - zookeeper-bin
-    - zookeeperd
+    - unzip
     - python-setuptools
     - python-dev
-    - libcurl4-openssl-dev
-    - libsasl2-2
-    - libsasl2-dev
-    - libcurl3
     - mesos={{mesos_version}}-1.0.{{ansible_distribution|lower}}{{ansible_distribution_version.split('.')|join('')}}
-
-- name: Install Docker
-  apt: pkg=docker.io state=present update_cache=yes
-  when: docker_support == "yes"
-
-- name: Mesos default config file
-  template: src=mesos.j2 dest=/etc/default/mesos

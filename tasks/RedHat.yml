@@ -2,12 +2,15 @@
 - name: Add mesosphere repo
   yum: name=http://repos.mesosphere.io/el/6/noarch/RPMS/mesosphere-el-repo-6-2.noarch.rpm state=present
 
-- name: Install Mesos RedHat OS package
-  yum: name=mesos-{{mesos_version}} state=present
+- name: Downloading and enable the EPEL repository definitions.
+  action: command rpm -Uvh --replacepkgs http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
-- name: Install Docker
-  yum: pkg=docker.io state=present
-  when: docker_support == "yes"
-
-- name: Mesos default config file
-  template: src=mesos.j2 dest=/etc/default/mesos
+- name: Install os packages
+  yum: name={{item}} state=present
+  with_items:
+    - wget
+    - curl
+    - unzip
+    - libselinux-python 
+    - python-setuptools
+    - mesos-{{mesos_version}}

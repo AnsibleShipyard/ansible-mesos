@@ -1,4 +1,7 @@
 ---
+# Here we are using the debian package if debian
+- include_vars: "{{ ansible_os_family }}.yml"
+
 - include: common.yml
 
 # Here we are using the debian package if debian
@@ -8,7 +11,4 @@
 - include: RedHat.yml
   when: ansible_os_family == "RedHat"
 
-- include: slave.yml
-  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
-
-- include: deploy.yml
+- include: mesos.yml

@@ -1,9 +1,7 @@
 ---
 # i.e. upgrade mesos, templates stay the same...
 - name: Restart mesos-master
-  service: name=mesos-master state=restarted enabled=yes sleep=5
-  when: ansible_os_family == "Debian"
+  service: name=mesos-master state=restarted
 
-- name: Restart mesos-slave
-  service: name=mesos-slave state=restarted enabled=yes sleep=5
-  when: ansible_os_family == "Debian"
+- name: Restart mesos-slave 
+  service: name=mesos-slave state=restarted

@@ -1,6 +1,6 @@
 # {{ansible_managed}}
 
-description "mesos slave"
+description "mesos master"
 
 # Start just after the System-V jobs (rc) to ensure networking and zookeeper
 # are started. This is as simple as possible to ensure compatibility with
@@ -9,4 +9,4 @@ description "mesos slave"
 start on stopped rc RUNLEVEL=[2345]
 respawn
 
-exec /usr/bin/mesos-init-wrapper slave
+exec /usr/bin/mesos-init-wrapper master

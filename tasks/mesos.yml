@@ -1,0 +1,41 @@
+---
+# == Work Dir for replicated log
+- name: create work dir
+  file: path=/var/mesos state=directory
+
+# == Remove default configs
+- name: Remove Default Mesos Configs
+  file: state=absent path=/etc/mesos/
+
+- name: Remove Mesos ZK File
+  file: state=absent path=/etc/mesos/zk
+
+- name: Remove Default Mesos-Master Config
+  file: state=absent path=/etc/mesos-master/
+
+- name: Remove Default Mesos-Slave Config
+  file: state=absent path=/etc/mesos-slave/
+
+# == Configure and recreate
+- name: Mesos default config file
+  template: src=conf-mesos.j2 dest=/etc/default/mesos
+
+- name: Mesos Master config file
+  template: src=conf-mesos-master.j2 dest=/etc/default/mesos-master
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Mesos Slave config file
+  template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
+- name: Mesos master script
+  template: src=init-mesos-master.j2 dest=/etc/init/mesos-master.conf
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-master
+
+- name: Mesos slave script
+  template: src=init-mesos-slave.j2 dest=/etc/init/mesos-slave.conf
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-slave

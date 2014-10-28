@@ -20,22 +20,22 @@ Vagrant.configure("2") do |config|
   config.vm.define 'ubuntu', primary: true do |c|
     c.vm.network "private_network", ip: "192.168.100.3"
     c.vm.box = "trusty-server-cloudimg-amd64-vagrant-disk1"
-  	c.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
-  	c.vm.provision "shell" do |s|
-		  s.inline = "apt-get update -y; apt-get install python-software-properties; add-apt-repository ppa:voronov84/andreyv; apt-get update -y; apt-get install ansible -y"
-		  s.privileged = true
+    c.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+    c.vm.provision "shell" do |s|
+      s.inline = "apt-get update -y; apt-get install python-software-properties; add-apt-repository ppa:voronov84/andreyv; apt-get update -y; apt-get install ansible -y"
+      s.privileged = true
     end
   end
 
   # centos 6:
   config.vm.define 'centos' do |c|
-  	c.vm.network "private_network", ip: "192.168.100.4"
+    c.vm.network "private_network", ip: "192.168.100.4"
     c.vm.box = "centos65-x86_64-20140116"
-  	c.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box"
-  	c.vm.provision "shell" do |s|
+    c.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.3/centos65-x86_64-20140116.box"
+    c.vm.provision "shell" do |s|
       s.inline = "yum update gmp; yum install ansible -y"
-		  s.privileged = true
-	  end
+      s.privileged = true
+    end
   end
 
 end
