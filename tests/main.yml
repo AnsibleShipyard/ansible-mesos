@@ -1,7 +1,12 @@
 ---
+
 - hosts: localhost
   connection: local
   sudo: yes
+  
+  roles:
+    - ansible-mesos
+
   tasks:
     # Check service status for Mesos Master
     - name: Check mesos-master service
