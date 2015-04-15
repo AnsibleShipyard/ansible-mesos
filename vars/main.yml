@@ -2,13 +2,14 @@
 mesos_playbook_version: "0.3.2"
 
 mesos_install_mode: "master" # {master|slave|master-slave}
-mesos_version: "0.21.0"
+mesos_version: "0.22.0"
 
 # conf file settings
-mesos_cluster_name: "mesos_cluster"
+mesos_cluster_name: "maayanlab_mesos"
 mesos_ip: "{{ansible_default_ipv4.address}}"
 mesos_hostname: "{{ inventory_hostname }}"
-mesos_port: "5050"
+mesos_master_port: "5050"
+mesos_slave_port: "5051"
 mesos_log_location: "/var/log/mesos"
 mesos_ulimit: "-n 8192"
 mesos_options: "--log_dir=$LOGS"
