@@ -1,6 +1,6 @@
 # {{ansible_managed}}
 
-# special options supported by 
+# special options supported by
 # mesos-init-wrapper
 CLUSTER="{{mesos_cluster_name}}"
 IP={{mesos_ip}}
@@ -11,4 +11,3 @@ ZK="{{ mesos_zookeeper_masters }}"
 # mesos env variables
 # see http://mesos.apache.org/documentation/latest/configuration/
 export MESOS_HOSTNAME="{{ mesos_hostname }}"
-export MESOS_PORT="{{ mesos_port }}"
