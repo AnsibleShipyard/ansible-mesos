@@ -3,11 +3,17 @@
 - hosts: localhost
   connection: local
   sudo: yes
+  gather_facts: false
   
-  roles:
-    - ansible-mesos
-
-  # tasks:
-    # Ansible does not recommend checking for service status as a test
-    # Need to find a rest endpoint to curl instead
+  tasks:
+    - name: Wait for Mesosphere to be up
+      wait_for: host="{{ansible_default_ipv4.address}}" port=5050 state=started delay=3 timeout=5
     
+    - name: Test for Mesosphere metrics endpoint
+      get_url: 
+        url="http://{{ansible_default_ipv4.address}}:5050/metrics/snapshot" 
+        dest=/tmp/mesos-metrics
+        force=yes
+      register: status
+      failed_when: "'OK' not in status.msg"
+
