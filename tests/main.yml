@@ -3,7 +3,6 @@
 - hosts: localhost
   connection: local
   sudo: yes
-  gather_facts: false
   
   tasks:
     - name: Wait for Mesosphere to be up
