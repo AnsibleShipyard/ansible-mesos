@@ -1,0 +1,14 @@
+# {{ansible_managed}}
+
+[Unit]
+Description=mesos slave
+
+[Service]
+Type=simple
+User=mesos
+Group=mesos
+ExecStart=/usr/bin/mesos-init-wrapper slave
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target

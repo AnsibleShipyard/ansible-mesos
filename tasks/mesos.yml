@@ -1,7 +1,7 @@
 ---
 # == Work Dir for replicated log
 - name: create work dir
-  file: path=/var/mesos state=directory
+  file: path={{ mesos_work_dir }} state=directory
 
 # == Remove default configs
 - name: Remove Default Mesos Configs
@@ -19,23 +19,51 @@
 # == Configure and recreate
 - name: Mesos default config file
   template: src=conf-mesos.j2 dest=/etc/default/mesos
+  notify:
+    - Restart mesos-master
+    - Restart mesos-slave
 
 - name: Mesos Master config file
   template: src=conf-mesos-master.j2 dest=/etc/default/mesos-master
   when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-master
 
 - name: Mesos Slave config file
   template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+  notify:
+    - Restart mesos-slave
 
-- name: Mesos master script
+- name: Check if upstart exists
+  stat: path=/etc/init/
+  register: etc_init
+
+- name: Mesos master upstart script
   template: src=init-mesos-master.j2 dest=/etc/init/mesos-master.conf
-  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+  when: (mesos_install_mode == "master" or mesos_install_mode == "master-slave") and etc_init.stat.exists == true
   notify:
     - Restart mesos-master
 
-- name: Mesos slave script
+- name: Mesos slave upstart script
   template: src=init-mesos-slave.j2 dest=/etc/init/mesos-slave.conf
-  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+  when: (mesos_install_mode == "slave" or mesos_install_mode == "master-slave") and etc_init.stat.exists == true
   notify:
     - Restart mesos-slave
+    
+- name: Check if systemd exists
+  stat: path=/usr/lib/systemd/system/
+  register: systemd_check
+  
+- name: Mesos master systemd script
+  template: src=mesos-master.service.j2 dest=/usr/lib/systemd/system/mesos-master.service
+  when: (mesos_install_mode == "master" or mesos_install_mode == "master-slave") and systemd_check.stat.exists == true
+  notify:
+    - Restart mesos-master
+
+- name: Mesos slave systemd script
+  template: src=mesos-slave.service.j2 dest=/usr/lib/systemd/system/mesos-slave.service
+  when: (mesos_install_mode == "slave" or mesos_install_mode == "master-slave") and systemd_check.stat.exists == true
+  notify:
+    - Restart mesos-slave
+

@@ -20,7 +20,7 @@ script:
   - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
 
   # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/main.yml --connection=local --sudo"
+  - "ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo"
 
   # Healthcheck
   # - "curl http://localhost:5050/"

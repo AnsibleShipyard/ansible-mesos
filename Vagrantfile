@@ -38,4 +38,14 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  # centos 7:
+  config.vm.define 'centos7' do |c|
+    c.vm.network "private_network", ip: "192.168.100.5"
+    c.vm.box = "centos/7"
+    c.vm.provision "shell" do |s|
+      s.inline = "yum install -y epel-release; yum install -y ansible"
+      s.privileged = true
+    end
+  end
+
 end
