@@ -7,9 +7,6 @@
 - name: Remove Default Mesos Configs
   file: state=absent path=/etc/mesos/
 
-- name: Remove Mesos ZK File
-  file: state=absent path=/etc/mesos/zk
-
 - name: Remove Default Mesos-Master Config
   file: state=absent path=/etc/mesos-master/
 
@@ -26,6 +23,13 @@
 
 - name: Mesos Slave config file
   template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
+- name: Create Mesos Config directory
+  file: state=directory path=/etc/mesos/
+
+- name: Mesos ZK File
+  template: src=zk.j2 dest=/etc/mesos/zk
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
 
 - name: Mesos master script
