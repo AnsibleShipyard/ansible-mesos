@@ -20,3 +20,9 @@ mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos"
 # Containerizer
 mesos_containerizers: "mesos"
 mesos_executor_timeout: "5mins"
+
+# Additional configurations
+mesos_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
