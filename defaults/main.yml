@@ -21,7 +21,7 @@ mesos_containerizers: "mesos"
 mesos_executor_timeout: "5mins"
 
 # Additional configurations
-mesos_configs: []
+mesos_additional_configs: []
   # For example:
   # - name: FOO
   #   value: bar
