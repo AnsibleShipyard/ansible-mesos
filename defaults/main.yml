@@ -10,7 +10,6 @@ mesos_master_port: "5050"
 mesos_slave_port: "5051"
 mesos_log_location: "/var/log/mesos"
 mesos_ulimit: "-n 8192"
-mesos_options: "--log_dir=$LOGS"
 mesos_work_dir: "/var/mesos"
 mesos_quorum: "1"
 zookeeper_client_port: "2181"
@@ -20,3 +19,9 @@ mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos"
 # Containerizer
 mesos_containerizers: "mesos"
 mesos_executor_timeout: "5mins"
+
+# Additional configurations
+mesos_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
