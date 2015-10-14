@@ -19,7 +19,9 @@ Combined with [Ansible groups](http://docs.ansible.com/intro_inventory.html#host
 
 * ```zookeeper_hostnames``` specifies the list of zookeeper nodes used by Mesos for HA. By default this is the current node hostname and the default zookeeper port ```localhost:2181```. It can be constructed in your playbook by combining all nodes in your zookeeper group:
 
-     - { role: 'ansible-mesos', zookeeper_hostnames: "{{ groups.zookeeper_hosts | join(':' + zookeeper_client_port + ',')  }}:{{ zookeeper_client_port  }}" }
+  ``` yaml
+  - { role: 'ansible-mesos', zookeeper_hostnames: "{{ groups.zookeeper_hosts | join(':' + zookeeper_client_port + ',')  }}:{{ zookeeper_client_port  }}" }
+  ```
 
 which produces ```zookeeper1:2181,zookeeper2:2181,zookeeper3:2181```. This gets merged into the mesos_zookeeper_masters uri. 
  
