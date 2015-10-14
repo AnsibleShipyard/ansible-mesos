@@ -5,8 +5,8 @@ Description=mesos master
 
 [Service]
 Type=simple
-User=mesos
-Group=mesos
+User={{ mesos_owner }}
+Group={{ mesos_group }}
 ExecStart=/usr/bin/mesos-init-wrapper master
 TimeoutSec=300
 
