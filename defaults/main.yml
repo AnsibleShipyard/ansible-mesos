@@ -16,6 +16,8 @@ mesos_quorum: "1"
 zookeeper_client_port: "2181"
 zookeeper_hostnames: "{{ mesos_hostname }}:{{ zookeeper_client_port }}"
 mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos"
+mesos_owner: root
+mesos_group: root
 
 # Containerizer
 mesos_containerizers: "mesos"
