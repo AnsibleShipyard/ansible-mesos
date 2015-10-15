@@ -15,17 +15,19 @@ It also allows the setting of specific slave executors so you can run with nativ
 
 ## Configuration
 
-Combined with [Ansible groups](http://docs.ansible.com/intro_inventory.html#hosts-and-groups) this role makes it easy to specify a multi-node Mesos master for high availability. There is one variable in your playbook to override:
+Combined with [Ansible groups](http://docs.ansible.com/intro_inventory.html#hosts-and-groups) this role makes it easy to specify a multi-node Mesos master for high availability.
 
-* ```zookeeper_hostnames``` specifies the list of zookeeper nodes used by Mesos for HA. By default this is the current node hostname and the default zookeeper port ```localhost:2181```. It can be constructed in your playbook by combining all nodes in your zookeeper group:
+* `zookeeper_hostnames` specifies the list of zookeeper nodes used by Mesos for HA. By default this is the current node's short hostname and the default zookeeper port (e.g. `mesos-master01:2181`). It can be constructed in your playbook by combining all nodes in your zookeeper group:
 
   ``` yaml
   - { role: 'ansible-mesos', zookeeper_hostnames: "{{ groups.zookeeper_hosts | join(':' + zookeeper_client_port + ',')  }}:{{ zookeeper_client_port  }}" }
   ```
 
-which produces ```zookeeper1:2181,zookeeper2:2181,zookeeper3:2181```. This gets merged into the mesos_zookeeper_masters uri. 
+  which produces ```zookeeper1:2181,zookeeper2:2181,zookeeper3:2181```. This gets merged into the mesos_zookeeper_masters uri.
  
-You may also want to specify a ```mesos_quorum``` value of ```n/2 + 1```, where n is the number of nodes, as Mesos uses a ```replicated_log``` by default.
+* `mesos_quorum` specifies the size of the quorum for leader election. If you are running a cluster with multiple masters, you will want to set this value to `n/2 + 1`, where `n` is the number of Mesos masters in the cluster. Defaults to 1.
+
+* `mesos_hostname` is used to identify hosts in the Mesos cluster. It defaults to `{{ ansible_hostname }}`, which is the short hostname of the server. If you have multiple hosts with the same short hostname, you may want to set this to `{{ ansible_fqdn }}` or `{{ ansible_default_ipv4.address }}` to ensure the Mesos hostname is unique.
 
 ### Docker Support
 
