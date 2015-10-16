@@ -1,6 +1,6 @@
 ---
 - name: Add mesosphere repo
-  yum: name={{ mesosphere_repo }} state=present
+  yum: name={{ mesosphere_yum_repo }} state=present
 
 - name: Downloading and enable the EPEL repository definitions.
   yum: name={{ epel_repo }} state=present
