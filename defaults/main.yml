@@ -13,7 +13,7 @@ mesosphere_yum_repo: "http://repos.mesosphere.com/el/{{ os_version_major }}/noar
 # conf file settings
 mesos_cluster_name: "mesos_cluster"
 mesos_ip: "{{ansible_default_ipv4.address}}"
-mesos_hostname: "{{ inventory_hostname }}"
+mesos_hostname: "{{ ansible_hostname }}"
 mesos_master_port: "5050"
 mesos_slave_port: "5051"
 mesos_log_location: "/var/log/mesos"
