@@ -6,12 +6,8 @@ epel_releases:
   '6': 'epel-release-6-8.noarch.rpm'
   '7': 'e/epel-release-7-5.noarch.rpm'
 
-epel_repo: "http://dl.fedoraproject.org/pub/epel/{{ os_version_major }}/{{ ansible_architecture }}/{{ epel_releases[os_version_major] }}"
-
 # Mesosphere released packaged per OS version
 mesosphere_releases:
   '6': 'mesosphere-el-repo-6-3.noarch.rpm'
   '7': 'mesosphere-el-repo-7-1.noarch.rpm'
-
-mesosphere_repo: "http://repos.mesosphere.com/el/{{ os_version_major }}/noarch/RPMS/{{ mesosphere_releases[os_version_major] }}"
 
