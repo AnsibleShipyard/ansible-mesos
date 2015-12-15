@@ -1,9 +1,9 @@
 ---
 mesos_install_mode: "master" # {master|slave|master-slave}
-mesos_version: "0.21.0"
+mesos_version: "0.25.0"
 
 # Debian
-mesos_package_version: "1.0"
+mesos_package_version: "0.2.70"
 mesosphere_apt_url: "http://repos.mesosphere.com/{{ ansible_distribution | lower }}"
 
 # RedHat: EPEL and Mesosphere yum repositories URL
