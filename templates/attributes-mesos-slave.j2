@@ -1,0 +1,1 @@
+{% for k,v in mesos_attributes.iteritems() %}{{ k }}:{{ v }}{% if not loop.last %};{% endif%}{% endfor %}
