@@ -11,4 +11,4 @@
 - include: RedHat.yml
   when: ansible_os_family == "RedHat"
 
-- include: mesos.yml
+- include: mesos.yml tags=configuration
