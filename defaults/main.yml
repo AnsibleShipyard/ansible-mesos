@@ -38,3 +38,14 @@ mesos_additional_configs: []
   # - name: FOO
   #   value: bar
 
+# Additional configurations for master
+mesos_master_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
+
+# Additional configurations for slave
+mesos_slave_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
