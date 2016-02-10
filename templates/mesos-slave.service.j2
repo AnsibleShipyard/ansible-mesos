@@ -2,13 +2,17 @@
 
 [Unit]
 Description=mesos slave
+After=network.target
+Wants=network.target
 
 [Service]
-Type=simple
+ExecStart=/usr/bin/mesos-init-wrapper slave
+KillMode=process
+Restart=always
+RestartSec=20
+TimeoutSec=300
 User={{ mesos_owner }}
 Group={{ mesos_group }}
-ExecStart=/usr/bin/mesos-init-wrapper slave
-TimeoutSec=300
 
 [Install]
 WantedBy=multi-user.target

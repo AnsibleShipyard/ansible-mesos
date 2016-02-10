@@ -2,13 +2,16 @@
 
 [Unit]
 Description=mesos master
+After=network.target
+Wants=network.target
 
 [Service]
-Type=simple
+ExecStart=/usr/bin/mesos-init-wrapper master
+Restart=always
+RestartSec=20
+TimeoutSec=300
 User={{ mesos_owner }}
 Group={{ mesos_group }}
-ExecStart=/usr/bin/mesos-init-wrapper master
-TimeoutSec=300
 
 [Install]
 WantedBy=multi-user.target
