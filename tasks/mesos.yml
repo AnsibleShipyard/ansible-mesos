@@ -69,3 +69,10 @@
     - Reload daemon
     - Restart mesos-slave
 
+- name: Disable mesos-master service
+  service: name=mesos-master enabled=no
+  when: mesos_install_mode == "slave" and systemd_check.stat.exists == true
+
+- name: Disable mesos-slave service
+  service: name=mesos-slave enabled=no
+  when: mesos_install_mode == "master" and systemd_check.stat.exists == true
