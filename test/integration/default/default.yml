@@ -1,0 +1,24 @@
+---
+- hosts: all
+  tasks:
+    - name: Installing repo for Java 8 in Ubuntu
+      when: "ansible_os_family == 'Debian'"
+      apt_repository: repo='ppa:openjdk-r/ppa'
+
+- hosts: all
+  roles:
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'RedHat'"
+      java_packages:
+        - java-1.8.0-openjdk
+
+    - role: geerlingguy.java
+      when: "ansible_os_family == 'Debian'"
+      java_packages:
+        - openjdk-8-jdk
+
+    - role: ernestas-poskus.zookeeper
+
+    - role: ansible-mesos
+      mesos_install_mode: master-slave
+      mesos_ip: 127.0.0.1
