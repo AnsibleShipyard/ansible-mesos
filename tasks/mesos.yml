@@ -35,6 +35,38 @@
   notify:
     - Restart mesos-slave
 
+- name: Ensure mesos-master config dir exists
+  file: state=directory path=/etc/mesos-master/ recurse=yes
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Ensure mesos-slave config dir exists
+  file: state=directory path=/etc/mesos-slave/ recurse=yes
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
+- name: Generate mesos-master config
+  lineinfile: create=yes state=present dest="/etc/mesos-master/{{item.name}}" line="{{item.value}}"
+  with_items:
+    mesos_master_additional_config
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Generate mesos-master flag
+  file: state=touch path="/etc/mesos-master/?{{item}}"
+  with_items:
+    mesos_master_additional_flags
+  when: mesos_install_mode == "master" or mesos_install_mode == "master-slave"
+
+- name: Generate mesos-slave config
+  lineinfile: create=yes state=present dest="/etc/mesos-slave/{{item.name}}" line="{{item.value}}"
+  with_items:
+    mesos_slave_additional_config
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
+- name: Generate mesos-slave flag
+  file: state=touch path="/etc/mesos-slave/?{{item}}"
+  with_items:
+    mesos_slave_additional_flags
+  when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
+
 - name: Check if upstart exists
   stat: path=/etc/init/
   register: etc_init
