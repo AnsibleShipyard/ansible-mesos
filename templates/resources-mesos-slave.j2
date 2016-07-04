@@ -1,0 +1,1 @@
+{% for k,v in mesos_resources.iteritems() %}{{ k }}:{{ v }}{% if not loop.last %};{% endif %}{% endfor %}

@@ -35,3 +35,13 @@ mesos_additional_configs: []
   # For example:
   # - name: FOO
   #   value: bar
+
+# A dictionary of attributes which the Mesos slave node passes along when it sends offers
+mesos_attributes: {}
+  # rack_id: 1
+  # os: centos7
+
+# A dictionary of resources which the Mesos slave node should offer
+mesos_resources: {}
+  # ports(*): "[31000-32000]"
+  # ports(marathon): "[8000-9000]"
