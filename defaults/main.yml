@@ -5,6 +5,8 @@ mesos_version: "0.25.0"
 # Debian
 mesos_package_version: "0.2.70"
 mesosphere_apt_url: "http://repos.mesosphere.com/{{ ansible_distribution | lower }}"
+mesos_os_distribution: "{{ ansible_distribution | lower }}"
+mesos_os_version: "{{ ansible_distribution_version.split('.') | join('') }}"
 
 # RedHat: EPEL and Mesosphere yum repositories URL
 epel_repo: "https://dl.fedoraproject.org/pub/epel/{{ os_version_major }}/{{ ansible_architecture }}/{{ epel_releases[os_version_major] }}"
@@ -12,7 +14,7 @@ mesosphere_yum_repo: "https://repos.mesosphere.com/el/{{ os_version_major }}/noa
 
 # conf file settings
 mesos_cluster_name: "mesos_cluster"
-mesos_ip: "{{ansible_default_ipv4.address}}"
+mesos_ip: "{{ ansible_default_ipv4.address }}"
 mesos_hostname: "{{ ansible_hostname }}"
 mesos_master_port: "5050"
 mesos_slave_port: "5051"
@@ -35,3 +37,4 @@ mesos_additional_configs: []
   # For example:
   # - name: FOO
   #   value: bar
+

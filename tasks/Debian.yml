@@ -13,4 +13,5 @@
     - unzip
     - python-setuptools
     - python-dev
-    - mesos={{mesos_version}}-{{mesos_package_version}}.{{ansible_distribution|lower}}{{ansible_distribution_version.split('.')|join('')}}
+    - mesos={{ mesos_version }}-{{ mesos_package_version }}.{{ mesos_os_distribution }}{{ mesos_os_version }}
+
