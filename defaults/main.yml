@@ -35,3 +35,14 @@ mesos_additional_configs: []
   # For example:
   # - name: FOO
   #   value: bar
+
+mesos_master_additional_flags: []
+mesos_slave_additional_flags: []
+mesos_master_additional_config: []
+# For example:
+  # - name: FOO
+  #   value: bar
+mesos_slave_additional_config: []
+# For example:
+  # - name: FOO
+  #   value: bar
