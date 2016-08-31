@@ -1,6 +1,6 @@
 ---
 - name: Add apt-key
-  apt_key: id=DF7D54CBE56151BF keyserver=keyserver.ubuntu.com state=present
+  apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
 
 - name: Add mesosphere repo
   apt_repository: repo='deb {{ mesosphere_apt_url }} {{ansible_distribution_release|lower}} main' state=present
@@ -13,4 +13,5 @@
     - unzip
     - python-setuptools
     - python-dev
-    - mesos={{mesos_version}}-{{mesos_package_version}}.{{ansible_distribution|lower}}{{ansible_distribution_version.split('.')|join('')}}
+    - mesos={{ mesos_version }}-{{ mesos_package_version }}.{{ mesos_os_distribution }}{{ mesos_os_version }}
+
