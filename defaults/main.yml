@@ -30,7 +30,7 @@ mesos_owner: root
 mesos_group: root
 
 # Containerizer
-mesos_containerizers: "mesos"
+mesos_containerizers: "docker,mesos"
 mesos_executor_timeout: "5mins"
 
 mesos_option_prefix: "MESOS_"
