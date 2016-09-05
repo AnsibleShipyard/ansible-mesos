@@ -1,26 +1,77 @@
----
-language: python
-python: "2.7"
+sudo: required
 
 env:
-  - SITE=playbook.yml
+  global:
+    # https://github.com/travis-ci/travis-ci/issues/6461#issuecomment-239577306
+    DOCKER_VERSION: "1.9.1-0~trusty"
+  matrix:
+    - distro: ernestasposkus/centos7
+      init: /usr/lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distro: ernestasposkus/centos6
+      init: /sbin/init
+      run_opts: ""
+    - distro: ernestasposkus/ubuntu1604
+      init: /lib/systemd/systemd
+      run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
+    - distro: ernestasposkus/ubuntu1404
+      init: /sbin/init
+      run_opts: ""
+
+services:
+  - docker
 
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install curl -y
+  # Downgrade to specific version of Docker engine.
+  - sudo apt-get update
+  - sudo apt-get remove docker-engine -yq
+  - sudo apt-get install docker-engine=$DOCKER_VERSION -yq --no-install-suggests --no-install-recommends --force-yes -o Dpkg::Options::="--force-confnew"
 
-install:
-  - pip install -U ansible
-
-  # Add ansible.cfg to pick up roles path.
-  - "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
+  # Pull container.
+  - 'sudo docker pull ${distro}:latest'
 
 script:
-  # Check the role/playbook's syntax.
-  - "ansible-playbook -i tests/inventory tests/$SITE --syntax-check"
+  - container_id=$(mktemp)
+    # Run container in detached state.
+  - 'sudo docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} ${distro}:latest "${init}" > "${container_id}"'
 
-  # Run the role/playbook with ansible-playbook.
-  - "ansible-playbook -i tests/inventory tests/playbook.yml --connection=local --sudo"
+  # Inspect docker container
+  - 'sudo docker inspect $(cat ${container_id})'
 
-  # Healthcheck
-  # - "curl http://localhost:5050/"
+  # Print ansible version
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible --version'
+
+  # Check Ansible host setup
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible all -i "localhost," -c local -m setup'
+
+  # Install dependencies
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install geerlingguy.java'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-galaxy install AnsibleShipyard.ansible-zookeeper'
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/dependencies.yml'
+
+  # Ansible syntax check.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/playbook.yml --syntax-check'
+
+  # Test role.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/playbook.yml'
+
+  # Test role idempotence.
+  - idempotence=$(mktemp)
+  - sudo docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/playbook.yml | tee -a ${idempotence}
+  - >
+    tail ${idempotence}
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Test role.
+  - 'sudo docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
+
+  # View container logs
+  - 'sudo docker logs "$(cat ${container_id})"'
+
+  # Clean up.
+  - 'sudo docker stop "$(cat ${container_id})"'
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/ - "curl http://localhost:5050/"

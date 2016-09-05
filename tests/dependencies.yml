@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  connection: local
+  remote_user: root
+  roles:
+    - role: geerlingguy.java
+    - role: AnsibleShipyard.ansible-zookeeper
