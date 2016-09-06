@@ -32,9 +32,22 @@ mesos_group: root
 mesos_containerizers: "mesos"
 mesos_executor_timeout: "5mins"
 
+mesos_option_prefix: "MESOS_"
+
 # Additional configurations
 mesos_additional_configs: []
   # For example:
   # - name: FOO
   #   value: bar
 
+# Additional configurations for master
+mesos_master_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
+
+# Additional configurations for slave
+mesos_slave_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
