@@ -13,6 +13,7 @@ ZK="{{ mesos_zookeeper_masters }}"
 export MESOS_HOSTNAME="{{ mesos_hostname }}"
 
 # Additional configs
+export MESOS_OPTION_PREFIX={{mesos_option_prefix}}
 {% for config_item in mesos_additional_configs %}
-export MESOS_{{config_item.name}}={{config_item.value}}
+export {{mesos_option_prefix}}{{config_item.name}}={{config_item.value}}
 {% endfor %}

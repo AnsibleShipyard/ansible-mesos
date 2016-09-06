@@ -8,5 +8,5 @@ export MESOS_WORK_DIR="{{ mesos_work_dir }}"
 
 # Additional configs
 {% for config_item in mesos_slave_additional_configs %}
-export MESOS_{{config_item.name}}={{config_item.value}}
+export {{mesos_option_prefix}}{{config_item.name}}={{config_item.value}}
 {% endfor %}
