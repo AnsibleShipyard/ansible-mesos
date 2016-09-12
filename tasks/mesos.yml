@@ -35,35 +35,35 @@
   notify:
     - Restart mesos-slave
 
-- name: Check if upstart exists
-  stat: path=/etc/init/
-  register: etc_init
-
 - name: Mesos master upstart script
   template: src=init-mesos-master.j2 dest=/etc/init/mesos-master.conf
-  when: (mesos_install_mode == "master" or mesos_install_mode == "master-slave") and etc_init.stat.exists == true
+  when:
+    - (mesos_install_mode == "master" or mesos_install_mode == "master-slave")
+    - ansible_service_mgr != 'systemd'
   notify:
     - Restart mesos-master
 
 - name: Mesos slave upstart script
   template: src=init-mesos-slave.j2 dest=/etc/init/mesos-slave.conf
-  when: (mesos_install_mode == "slave" or mesos_install_mode == "master-slave") and etc_init.stat.exists == true
+  when:
+    - (mesos_install_mode == "slave" or mesos_install_mode == "master-slave")
+    - ansible_service_mgr != 'systemd'
   notify:
     - Restart mesos-slave
-    
+
 - name: Check if systemd exists
-  stat: path=/usr/lib/systemd/system/
+  stat: path=/lib/systemd/system/
   register: systemd_check
-  
+
 - name: Mesos master systemd script
-  template: src=mesos-master.service.j2 dest=/usr/lib/systemd/system/mesos-master.service
+  template: src=mesos-master.service.j2 dest=/lib/systemd/system/mesos-master.service
   when: (mesos_install_mode == "master" or mesos_install_mode == "master-slave") and systemd_check.stat.exists == true
   notify:
     - Reload daemon
     - Restart mesos-master
 
 - name: Mesos slave systemd script
-  template: src=mesos-slave.service.j2 dest=/usr/lib/systemd/system/mesos-slave.service
+  template: src=mesos-slave.service.j2 dest=/lib/systemd/system/mesos-slave.service
   when: (mesos_install_mode == "slave" or mesos_install_mode == "master-slave") and systemd_check.stat.exists == true
   notify:
     - Reload daemon

@@ -1,9 +1,9 @@
 ---
 mesos_install_mode: "master" # {master|slave|master-slave}
-mesos_version: "0.25.0"
+mesos_version: "1.0.1"
 
 # Debian
-mesos_package_version: "0.2.70"
+mesos_package_version: "2.0.93"
 mesosphere_apt_url: "http://repos.mesosphere.com/{{ ansible_distribution | lower }}"
 mesos_os_distribution: "{{ ansible_distribution | lower }}"
 mesos_os_version: "{{ ansible_distribution_version.split('.') | join('') }}"
