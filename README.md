@@ -3,34 +3,125 @@ ansible-mesos - Ansible Playbook for Mesos
 
 [![Build Status](https://travis-ci.org/AnsibleShipyard/ansible-mesos.svg?branch=master)](https://travis-ci.org/AnsibleShipyard/ansible-mesos)
 
-## Overview
-
-The ansible-mesos role supports the installation and configuration of a mesos cluster with options for master, slave or a master-slave setup. It supports Ubuntu and RedHat/Centos. 
+The ansible-mesos role supports the installation and configuration of a mesos cluster with options for master, slave or a master-slave setup. It supports Ubuntu and RedHat/Centos.
 
 It also allows the setting of specific slave executors so you can run with native docker support.
 
-## Requirements
-  
-  - ansible-zookeeper, or a zookeeper server
+Installation
+-----------
 
-## Configuration
+```bash
+ansible-galaxy install AnsibleShipyard.ansible-mesos
+```
 
-Combined with [Ansible groups](http://docs.ansible.com/intro_inventory.html#hosts-and-groups) this role makes it easy to specify a multi-node Mesos master for high availability.
+Dependencies
+------------
 
-* `zookeeper_hostnames` specifies the list of zookeeper nodes used by Mesos for HA. By default this is the current node's short hostname and the default zookeeper port (e.g. `mesos-master01:2181`). It can be constructed in your playbook by combining all nodes in your zookeeper group:
+Java and Zookeeper
 
-  ``` yaml
-  - { role: 'ansible-mesos', zookeeper_hostnames: "{{ groups.zookeeper_hosts | join(':' + zookeeper_client_port + ',')  }}:{{ zookeeper_client_port  }}" }
-  ```
+ - https://github.com/geerlingguy/ansible-role-java OR https://github.com/AnsibleShipyard/ansible-java
+ - https://github.com/AnsibleShipyard/ansible-zookeeper
 
-  which produces ```zookeeper1:2181,zookeeper2:2181,zookeeper3:2181```. This gets merged into the mesos_zookeeper_masters uri.
- 
-* `mesos_quorum` specifies the size of the quorum for leader election. If you are running a cluster with multiple masters, you will want to set this value to `n/2 + 1`, where `n` is the number of Mesos masters in the cluster. Defaults to 1.
+Requirements
+------------
 
-* `mesos_hostname` is used to identify hosts in the Mesos cluster. It defaults to `{{ ansible_hostname }}`, which is the short hostname of the server. If you have multiple hosts with the same short hostname, you may want to set this to `{{ ansible_fqdn }}` or `{{ ansible_default_ipv4.address }}` to ensure the Mesos hostname is unique.
+Ansible version at least 1.7
 
-### Docker Support
+Role Variables
+--------------
 
-Docker is only required on slave nodes and is not installed by default. To use docker with Mesos ensure that docker is installed on slave nodes. You can then set ```mesos_containerizers: "docker,mesos"``` for slave nodes.
+```yaml
+---
+mesos_install_mode: "master" # {master|slave|master-slave}
+mesos_version: "1.0.1"
 
-See the ```vars/main.yml``` file for specific role settings and [the Mesos configuration page for Mesos settings](http://mesos.apache.org/documentation/latest/configuration/).
+# Debian
+mesos_package_version: "2.0.93"
+mesosphere_apt_url: "http://repos.mesosphere.com/{{ ansible_distribution | lower }}"
+mesos_os_distribution: "{{ ansible_distribution | lower }}"
+mesos_os_version: "{{ ansible_distribution_version.split('.') | join('') }}"
+mesos_apt_package: "mesos={{ mesos_version }}-{{ mesos_package_version }}.{{ mesos_os_distribution }}{{ mesos_os_version }}"
+
+# RedHat: EPEL and Mesosphere yum repositories URL
+epel_repo: "https://dl.fedoraproject.org/pub/epel/{{ os_version_major }}/{{ ansible_architecture }}/{{ epel_releases[os_version_major] }}"
+mesosphere_yum_repo: "https://repos.mesosphere.com/el/{{ os_version_major }}/noarch/RPMS/{{ mesosphere_releases[os_version_major] }}"
+
+# conf file settings
+mesos_cluster_name: "mesos_cluster"
+mesos_ip: "{{ ansible_default_ipv4.address }}"
+mesos_hostname: "{{ ansible_hostname }}"
+mesos_master_port: "5050"
+mesos_slave_port: "5051"
+mesos_log_location: "/var/log/mesos"
+mesos_ulimit: "-n 8192"
+mesos_work_dir: "/var/mesos"
+mesos_quorum: "1"
+zookeeper_client_port: "2181"
+zookeeper_hostnames: "{{ mesos_hostname }}:{{ zookeeper_client_port }}"
+mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos"
+mesos_owner: root
+mesos_group: root
+
+# Containerizer
+mesos_containerizers: "docker,mesos"
+mesos_executor_timeout: "5mins"
+
+mesos_option_prefix: "MESOS_"
+
+# Additional configurations
+mesos_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
+
+# Additional configurations for master
+mesos_master_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
+
+# Additional configurations for slave
+mesos_slave_additional_configs: []
+  # For example:
+  # - name: FOO
+  #   value: bar
+```
+
+Playbook Example
+----------------
+
+```yaml
+- name: Java + Zookeeper + Mesos [master-slave]
+  hosts: all
+  sudo: yes
+  roles:
+    - role: geerlingguy.java
+
+    - role: AnsibleShipyard.ansible-zookeeper
+
+    - role: ansible-mesos
+      mesos_install_mode: master-slave
+```
+
+Docker is only required on slave nodes and is not installed by default.
+To use docker with Mesos ensure that docker is installed on slave nodes.
+You can then set ```mesos_containerizers: "docker,mesos"``` for slave nodes.
+
+License
+-------
+
+Apache License
+
+AnsibleShipyard
+-------
+
+Our related playbooks
+
+1. [ansible-marathon](https://github.com/AnsibleShipyard/ansible-marathon)
+1. [ansible-chronos](https://github.com/AnsibleShipyard/ansible-chronos)
+1. [ansible-zookeeper](https://github.com/AnsibleShipyard/ansible-zookeeper)
+
+Author Information
+------------------
+
+@AnsibleShipyard/developers and others.
