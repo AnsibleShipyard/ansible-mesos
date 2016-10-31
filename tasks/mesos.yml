@@ -33,6 +33,7 @@
   template: src=conf-mesos-slave.j2 dest=/etc/default/mesos-slave
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:
+    - Clear mesos-slave cache
     - Restart mesos-slave
 
 - name: Mesos master upstart script
@@ -49,6 +50,7 @@
     - (mesos_install_mode == "slave" or mesos_install_mode == "master-slave")
     - ansible_service_mgr != 'systemd'
   notify:
+    - Clear mesos-slave cache
     - Restart mesos-slave
 
 - name: Check if systemd exists
