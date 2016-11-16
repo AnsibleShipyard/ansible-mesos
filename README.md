@@ -11,7 +11,7 @@ Installation
 -----------
 
 ```bash
-ansible-galaxy install AnsibleShipyard.ansible-mesos
+ansible-galaxy install JasonGiedymin.mesos
 ```
 
 Dependencies
