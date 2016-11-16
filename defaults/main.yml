@@ -33,6 +33,9 @@ mesos_group: root
 mesos_containerizers: "docker,mesos"
 mesos_executor_timeout: "5mins"
 
+# If 'true' cleans symlink 'meta/slaves/latest' to avoid mesos-slave restart failures on config changes
+mesos_agent_meta_cleanup: false
+
 mesos_option_prefix: "MESOS_"
 
 # Additional configurations

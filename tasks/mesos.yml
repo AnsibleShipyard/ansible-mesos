@@ -22,6 +22,7 @@
   notify:
     - Restart mesos-master
     - Restart mesos-slave
+    - Cleanup meta/slaves/latest
 
 - name: Mesos Master config file
   template: src=conf-mesos-master.j2 dest=/etc/default/mesos-master
@@ -34,6 +35,7 @@
   when: mesos_install_mode == "slave" or mesos_install_mode == "master-slave"
   notify:
     - Restart mesos-slave
+    - Cleanup meta/slaves/latest
 
 - name: Mesos master upstart script
   template: src=init-mesos-master.j2 dest=/etc/init/mesos-master.conf
