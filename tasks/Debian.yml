@@ -3,10 +3,10 @@
   apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
 
 - name: Add mesosphere repo
-  apt_repository: repo='deb {{ mesosphere_apt_url }} {{ ansible_distribution_release | lower }} main' state=present
+  apt_repository: repo='deb {{ mesosphere_apt_url }} {{ ansible_distribution_release | lower }} main' state=present update_cache=yes
 
 - name: Install Debian OS packages
-  apt: pkg={{ item }} state=present update_cache=yes
+  apt: pkg={{ item }} state=present
   with_items:
     - wget
     - curl
