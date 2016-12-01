@@ -6,7 +6,7 @@
   apt_repository: repo='deb {{ mesosphere_apt_url }} {{ ansible_distribution_release | lower }} main' state=present update_cache=yes
 
 - name: Install Debian OS packages
-  apt: pkg={{ item }} state=present
+  apt: pkg={{ item }} state=present update_cache=yes cache_valid_time=3600
   with_items:
     - wget
     - curl
