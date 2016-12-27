@@ -13,9 +13,8 @@ galaxy_info:
   platforms:
   - name: EL
     versions:
-  #  - all
-  #  - 5
      - 6
+     - 7
   #- name: GenericUNIX
   #  versions:
   #  - all
@@ -54,16 +53,9 @@ galaxy_info:
   #  - 9.2
   - name: Ubuntu
     versions:
-      - all
-      - lucid
-      - maverick
-      - natty
-      - oneiric
-      - precise
-      - quantal
-      - raring
-      - saucy
       - trusty
+      - wily
+      - xenial
   #- name: SLES
   #  versions:
   #  - all
@@ -89,20 +81,8 @@ galaxy_info:
   # the platforms above, uncomment those that apply to your role.
   #
   categories:
-  #- cloud
-  #- cloud:ec2
-  #- cloud:gce
-  #- cloud:rax
-  #- database
-  #- database:nosql
-  #- database:sql
-  #- development
-  #- monitoring
-  #- networking
-  #- packaging
-  - system
-  #- web
-  - platform
+    - system
+    - platform
 dependencies: []
   # - ansible-java
   # - ansible-scala
