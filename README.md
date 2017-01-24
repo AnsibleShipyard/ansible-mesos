@@ -66,6 +66,12 @@ mesos_group: root
 mesos_containerizers: "docker,mesos"
 mesos_executor_timeout: "5mins"
 
+# SSL
+mesos_ssl_enabled: false
+mesos_ssl_support_downgrade: false
+mesos_ssl_key_file: # When SSL is enabled this must be used to point to the SSL key file
+mesos_ssl_cert_file: # When SSL is enabled this must be used to point to the SSL certificate file
+
 mesos_option_prefix: "MESOS_"
 
 # Additional configurations
