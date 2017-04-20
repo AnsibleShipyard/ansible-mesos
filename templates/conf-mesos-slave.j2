@@ -5,6 +5,7 @@ export MESOS_CONTAINERIZERS="{{ mesos_containerizers }}"
 export MESOS_EXECUTOR_REGISTRATION_TIMEOUT="{{ mesos_executor_timeout }}"
 export MESOS_PORT="{{ mesos_slave_port }}"
 export MESOS_WORK_DIR="{{ mesos_work_dir }}"
+export MESOS_ATTRIBUTES="node_type:{{ mesos_node_type }}"
 
 # Additional configs
 {% for config_item in mesos_slave_additional_configs %}

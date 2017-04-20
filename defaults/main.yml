@@ -28,6 +28,7 @@ zookeeper_hostnames: "{{ mesos_hostname }}:{{ zookeeper_client_port }}"
 mesos_zookeeper_masters: "zk://{{ zookeeper_hostnames }}/mesos"
 mesos_owner: root
 mesos_group: root
+mesos_node_type: general
 
 # Containerizer
 mesos_containerizers: "docker,mesos"
