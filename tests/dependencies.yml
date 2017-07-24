@@ -2,6 +2,24 @@
 - hosts: localhost
   connection: local
   remote_user: root
+  tasks:
+    - name: installing repo for Java 8 in Ubuntu
+      apt_repository: repo='ppa:openjdk-r/ppa'
+      when:
+        - ansible_os_family == 'Debian'
+
+- hosts: localhost
+  connection: local
+  remote_user: root
   roles:
     - role: geerlingguy.java
+      java_packages:
+        - openjdk-8-jdk
+      when: ansible_os_family == 'Debian'
+
+    - role: geerlingguy.java
+      java_packages:
+        - java-1.8.0-openjdk
+      when: ansible_os_family == 'RedHat'
+
     - role: AnsibleShipyard.ansible-zookeeper
