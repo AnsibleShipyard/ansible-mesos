@@ -2,16 +2,18 @@
 mesos_install_mode: "master" # {master|slave|master-slave}
 mesos_version: "1.1.0"
 
+mesos_repo_host: repos.mesosphere.com
+
 # Debian
 mesos_package_version: "2.0.107"
-mesosphere_apt_url: "http://repos.mesosphere.com/{{ ansible_distribution | lower }}"
+mesosphere_apt_url: "http://{{ mesos_repo_host }}/{{ ansible_distribution | lower }}"
 mesos_os_distribution: "{{ ansible_distribution | lower }}"
 mesos_os_version: "{{ ansible_distribution_version.split('.') | join('') }}"
 mesos_apt_package: "mesos={{ mesos_version }}-{{ mesos_package_version }}.{{ mesos_os_distribution }}{{ mesos_os_version }}"
 
 # RedHat: EPEL and Mesosphere yum repositories URL
 epel_repo: "https://dl.fedoraproject.org/pub/epel/{{ os_version_major }}/{{ ansible_architecture }}/{{ epel_releases[os_version_major] }}"
-mesosphere_yum_repo: "https://repos.mesosphere.com/el/{{ os_version_major }}/noarch/RPMS/{{ mesosphere_releases[os_version_major] }}"
+mesosphere_yum_repo: "https://{{ mesos_repo_host }}/el/{{ os_version_major }}/noarch/RPMS/{{ mesosphere_releases[os_version_major] }}"
 
 # conf file settings
 mesos_cluster_name: "mesos_cluster"
