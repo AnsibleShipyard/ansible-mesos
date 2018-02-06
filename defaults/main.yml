@@ -13,7 +13,7 @@ mesosphere_apt_url: "http://{{ mesos_repo_host }}/{{ ansible_distribution | lowe
 mesos_apt_package: "mesos={{ mesos_package_full_version }}"
 
 # RedHat: EPEL and Mesosphere yum repositories URL
-epel_repo: "https://dl.fedoraproject.org/pub/epel/{{ os_version_major }}/{{ ansible_architecture }}/{{ epel_releases[os_version_major] }}"
+epel_repo: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-{{ os_version_major }}.noarch.rpm"
 mesosphere_yum_repo: "https://{{ mesos_repo_host }}/el/{{ os_version_major }}/noarch/RPMS/{{ mesosphere_releases[os_version_major] }}"
 
 # conf file settings
